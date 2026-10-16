@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Magic Design System 1.0 | 周晓旭</title>
+<meta name="description" content="从全局属性到组件库的完整设计系统：色彩、字体、间距、圆角、阴影规范，32px 图标栅格，通用组件与机器人表情延展。" />
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Magic Design System 1.0" />
+<meta property="og:description" content="从设计 token 到组件库，让多人协作下的产出保持一致。" />
+<meta property="og:image" content="/assets/images/work/design-system-01.jpg" />
+<meta name="theme-color" content="#ffffff" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23fff'%3EZ%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/work.css" />
+</head>
+
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<div class="chrome">
+  <div class="chrome__lights" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="chrome__tab">Portfolio — 2026</div>
+  <div class="chrome__url"><span>zhou-xxdesign.github.io/work/design-system</span></div>
+  <div class="chrome__spacer" aria-hidden="true"></div>
+</div>
+
+<main class="case" id="main">
+  <div class="case__inner">
+
+    <nav class="case__nav">
+      <a class="case__back" href="/">全部作品</a>
+      <span class="case__index">(002 / 006)</span>
+    </nav>
+
+    <header class="case__hero">
+      <h1 class="case__title">Magic Design System 1.0</h1>
+      <p class="case__subtitle">
+        一套从设计 token 一路搭到组件库的完整体系。目标是让机器人产品的多端界面，
+        在多人协作下依然保持一致的视觉与交互语言。
+      </p>
+
+      <dl class="case__meta">
+        <div><dt>Time</dt><dd>2026</dd></div>
+        <div><dt>Role</dt><dd>UI/UX 设计师</dd></div>
+        <div><dt>Scope</dt><dd>设计系统 / 组件库</dd></div>
+        <div><dt>Output</dt><dd>全局属性 · 素材库 · 组件库</dd></div>
+      </dl>
+    </header>
+
+    <figure class="case__cover">
+      <img src="/assets/images/work/design-system-01.jpg" alt="Magic Design System 1.0 封面" width="1600" height="900" />
+    </figure>
+
+    <section class="case__section" style="margin-top:clamp(3rem,6vw,5rem)">
+      <p class="case__section-label">Structure<span>体系分层</span></p>
+      <div class="case__body">
+        <p>
+          整套系统分三层推进：最底层是<strong>全局属性</strong>（不可再拆的最小单元），
+          中间是<strong>素材库</strong>（图标与插画），最上层是<strong>通用组件</strong>与机器人表情延展。
+          上层只引用下层的变量，改一处全局生效。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 全局属性 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">01<span>全局属性</span></p>
+      <div class="case__body">
+        <p>设计中的最小单元，无法被拆解。</p>
+        <div class="case__points case__points--2">
+          <article class="case__point">
+            <span class="case__point-num">Color</span>
+            <h4>色彩规范</h4>
+            <p>品牌色 / 辅助色 / 系统色 / 字体色 / 背景色 / 功能色，六类角色各自独立，避免混用。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">Type</span>
+            <h4>字体规范</h4>
+            <p>displayLarge 64 / displayMedium 48 / headlineLarge 36 / headlineMedium 28 / headlineSmall 24，及各级 title / body / label。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">Space</span>
+            <h4>间距</h4>
+            <p>以 Unit 4 为基数：XS 8 / S 12 / M 16 / L 24 / XL 32 / XXL 48。卡片与分区间距按信息层级递增。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">Radius</span>
+            <h4>圆角</h4>
+            <p>3px 极小圆角、8px 常规圆角、30px 卡片圆角、10px 图标圆角，另有胶囊与圆形两种特殊形态。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">Shadow</span>
+            <h4>阴影</h4>
+            <p>基础投影 / 中级投影 / 上级投影三档，用模糊半径与不透明度区分层级，不用颜色区分。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/design-system-02.jpg" alt="全局属性：色彩、字体、间距、圆角、阴影规范" loading="lazy" width="1600" height="1231" />
+        <figcaption><b>Fig. 01</b> 全局属性 — 设计中的最小单元</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 素材库 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">02<span>素材库</span></p>
+      <div class="case__body">
+        <h3>Icon 一致性</h3>
+        <p>
+          定义 <strong>32×32</strong> 作为图标的基础绘制尺寸，需要其他尺寸时等比缩放，避免逐尺寸重绘导致的粗细不一。
+          风格上以圆性图标为主、线性图标为辅。
+        </p>
+        <p>
+          通用图标采用线性风格，线条粗细统一为 2.5px。动作图标单独定义为 40×40，
+          因为需要承载更复杂的人体姿态信息。
+        </p>
+        <h3>动作图标：用关节定位姿态</h3>
+        <p>
+          机器人动作图标是这套素材库里最有挑战的部分。做法是<strong>用圆圈定位关节</strong>，
+          再基于关节绘制不同状态的动作，从而尽可能准确地表达机器人的姿态——
+          这也让图标与机器人本体的动作形成映射关系，用户看图即知机器人会做什么。
+        </p>
+        <p>
+          覆盖举手、左右飞吻、鼓掌、剪刀、翻跟头、拳击、俯卧撑、马步推掌、依次翻滚、侧压腿等数十个动作。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/design-system-03.jpg" alt="素材库：图标一致性、通用图标、动作图标、空状态" loading="lazy" width="1600" height="900" />
+        <figcaption><b>Fig. 02</b> 素材库 — 图标栅格与动作图标</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 通用组件 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">03<span>通用组件</span></p>
+      <div class="case__body">
+        <p>
+          最小单元的组合呈现，赋有特殊功能。覆盖<strong>按钮、输入框、搜索框、选择器、下拉菜单、开关、提示框</strong>七类。
+        </p>
+        <p>
+          每一类都按三个维度定义：<strong>Type</strong>（组件类型）、<strong>Status</strong>（组件状态，如默认 / 禁用 / 加载中 / 悬停 / 点击）、
+          <strong>Style</strong>（组件样式与尺寸）。这样开发在实现时能直接对应到状态矩阵，而不是只拿到一张静态稿。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/design-system-04.jpg" alt="通用组件：按钮、输入框、搜索框、选择器、下拉菜单、开关、提示框" loading="lazy" width="1600" height="1227" />
+        <figcaption><b>Fig. 03</b> 通用组件与状态矩阵</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 机器人表情 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">04<span>表情延展</span></p>
+      <div class="case__body">
+        <p class="case__quote">让机器有表情，交互才有温度。</p>
+        <p>
+          Design Extension 部分把设计系统延伸到硬件本身——为不同机型设计机器人面部表情。
+          难点在于每种机型的屏幕形态完全不同，不能用同一套素材硬套。
+        </p>
+        <div class="case__points case__points--3">
+          <article class="case__point">
+            <span class="case__point-num">通用 · A2</span>
+            <h4>在基本型上做变化</h4>
+            <p>延伸的表情都保留共有元素，视觉上维持统一效果，靠眼部形态与弧度区分情绪。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">灵犀 · X2</span>
+            <h4>用光球颜色表达情绪</h4>
+            <p>面部屏幕尺寸较小，可将整个面部设计进去，但削弱了立体的温度；情绪通过面部光球颜色的变化做对应调整。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">精灵 · G2</span>
+            <h4>用光环表达状态</h4>
+            <p>以环形光效承载「I am listening」这类状态反馈，不占用显示区域。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/design-system-05.jpg" alt="机器人表情设计：通用 A2、灵犀 X2、精灵 G2" loading="lazy" width="1600" height="4120" />
+        <figcaption><b>Fig. 04</b> Robot Expression — 三代机型表情延展</figcaption>
+      </figure>
+    </div>
+
+    <a class="case__next" href="/work/agibot/">
+      <span class="case__next-label">Next project</span>
+      <span class="case__next-title">智元机器人 · AgiBot App</span>
+    </a>
+
+  </div>
+
+  <div class="case__inner">
+    <div class="case__colophon">
+      <span>Zhou Xiaoxu — Portfolio</span>
+      <span>© <span id="year">2026</span> 周晓旭</span>
+      <span>Designed with Intent</span>
+    </div>
+  </div>
+</main>
+
+<script src="/main.js" defer></script>
+</body>
+</html>

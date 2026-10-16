@@ -408,8 +408,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   line-height: 1.6;
 }
 
+/* 整块卡片可点击：媒体区 + 标题包在同一个链接里 */
+.card__link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .card__title {
   margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.3em;
@@ -417,6 +427,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 @media (min-width: 768px) {
   .card__title { font-size: 0.6875rem; }
+}
+
+/* 「查看详情」提示箭头：悬停时浮现 */
+.card__arrow {
+  font-style: normal;
+  line-height: 1;
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 /* 底部细线：悬停时黑色从左铺满 */
@@ -473,6 +492,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .card:hover .card__overlay { opacity: 1; }
   .card:hover .card__meta { transform: translateY(0); }
   .card:hover .card__rule::after { transform: scaleX(1); }
+  .card:hover .card__arrow { opacity: 1; transform: none; }
 }
 
 /* ---------- 关于 / 经历 / 联系 ---------------------------------------- */

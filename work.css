@@ -1,0 +1,322 @@
+/* ==========================================================================
+   项目详情页样式 — 依赖 styles.css 的变量与基础样式
+   与首页共用设计语言：白底黑字 / 等宽大写小标签 / 细线 / 手写体点缀
+   ========================================================================== */
+
+/* ---------- 容器 ---------------------------------------------------- */
+
+.case {
+  padding-bottom: 0;
+}
+
+.case__inner {
+  padding-inline: 1rem;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+@media (min-width: 768px) {
+  .case__inner { padding-inline: 3rem; }
+}
+@media (min-width: 1024px) {
+  .case__inner { padding-inline: 4rem; }
+}
+
+/* ---------- 返回条 -------------------------------------------------- */
+
+.case__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.75rem;
+  border-bottom: 1px solid var(--gray-100);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}
+
+.case__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--black);
+  transition: opacity 0.3s ease;
+}
+.case__back:hover { opacity: 0.5; }
+.case__back::before {
+  content: "";
+  width: 1.25rem;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+.case__back:hover::before { width: 1.75rem; }
+
+.case__index { color: var(--gray-400); white-space: nowrap; }
+
+/* ---------- Hero ---------------------------------------------------- */
+
+.case__hero { padding-block: clamp(3rem, 8vw, 6rem) clamp(2rem, 5vw, 3.5rem); }
+
+.case__title {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 5.5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.case__subtitle {
+  margin-top: 1.25rem;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--ink-60);
+  max-width: 46ch;
+}
+
+.case__meta {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--black);
+}
+@media (min-width: 768px) {
+  .case__meta { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.case__meta dt {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gray-400);
+  margin-bottom: 0.4rem;
+}
+.case__meta dd {
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+/* ---------- 首图 ---------------------------------------------------- */
+
+.case__cover {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.case__cover img {
+  width: 100%;
+  background: var(--gray-50);
+}
+
+/* ---------- 小节 ---------------------------------------------------- */
+
+.case__section {
+  display: grid;
+  gap: 1.5rem;
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+  border-top: 1px solid var(--gray-100);
+}
+@media (min-width: 900px) {
+  .case__section {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: 3rem;
+  }
+}
+
+.case__section-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--black);
+  padding-top: 0.35rem;
+}
+.case__section-label span {
+  display: block;
+  margin-top: 0.35rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--gray-400);
+}
+
+.case__body { display: grid; gap: 1.25rem; }
+
+.case__body p {
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--ink-60);
+  max-width: 62ch;
+}
+.case__body p strong { color: var(--black); font-weight: 500; }
+
+.case__body h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  margin-top: 0.5rem;
+}
+
+/* 引用式金句 */
+.case__quote {
+  font-family: var(--font-hand);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.3;
+  color: var(--black);
+  max-width: 24ch;
+}
+
+/* ---------- 要点列表 ------------------------------------------------ */
+
+.case__points {
+  display: grid;
+  gap: 2rem;
+  margin-top: 0.5rem;
+}
+@media (min-width: 768px) {
+  .case__points--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+  .case__points--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+}
+
+.case__point {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.case__point-num {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  color: var(--gray-400);
+}
+
+.case__point h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+}
+
+.case__point p {
+  font-size: 0.8125rem;
+  line-height: 1.8;
+  color: var(--ink-60);
+}
+
+/* ---------- 数据条 -------------------------------------------------- */
+
+.case__stats {
+  display: grid;
+  gap: 1.5rem;
+  padding-block: clamp(2rem, 4vw, 3rem);
+  border-block: 1px solid var(--gray-100);
+}
+@media (min-width: 768px) {
+  .case__stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.case__stat strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+.case__stat span {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--ink-60);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- 图 ------------------------------------------------------ */
+
+.case__figure { margin: 0; }
+
+.case__figure img {
+  width: 100%;
+  background: var(--gray-50);
+}
+
+.case__figure figcaption {
+  margin-top: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gray-400);
+  display: flex;
+  gap: 0.75rem;
+}
+.case__figure figcaption b {
+  font-weight: 400;
+  color: var(--black);
+}
+
+/* 图组：宽屏并排 */
+.case__gallery {
+  display: grid;
+  gap: 2rem;
+}
+@media (min-width: 768px) {
+  .case__gallery--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+}
+
+/* 图组与图之间统一间距 */
+.case__figures { display: grid; gap: clamp(2.5rem, 5vw, 4rem); }
+
+/* ---------- 下一个项目 ----------------------------------------------- */
+
+.case__next {
+  display: block;
+  padding-block: clamp(3.5rem, 8vw, 6rem);
+  border-top: 1px solid var(--gray-100);
+}
+.case__next-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--gray-400);
+  margin-bottom: 1rem;
+}
+.case__next-title {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  transition: color 0.4s ease;
+}
+.case__next:hover .case__next-title { color: var(--gray-400); }
+
+/* ---------- 详情页页脚 ----------------------------------------------- */
+
+.case__colophon {
+  border-top: 1px solid var(--gray-100);
+  padding-block: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: var(--gray-300);
+}
+@media (min-width: 768px) {
+  .case__colophon { flex-direction: row; justify-content: space-between; text-align: left; }
+}

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>集度 · JIDU 数字座舱 | 周晓旭</title>
+<meta name="description" content="独立负责集度 2D 导航与地图设计，输出 400+ 界面（Dark / Light 双主题），上线还原度 98%。项目获 2023 Red Dot Design Award。" />
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="集度 · JIDU 数字座舱" />
+<meta property="og:description" content="400+ 界面、98% 上线还原度，以及一套关于地图该怎么画的设计方法论。2023 红点设计奖。" />
+<meta property="og:image" content="/assets/images/work/jidu-01.jpg" />
+<meta name="theme-color" content="#ffffff" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23fff'%3EZ%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/work.css" />
+</head>
+
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<div class="chrome">
+  <div class="chrome__lights" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="chrome__tab">Portfolio — 2026</div>
+  <div class="chrome__url"><span>zhou-xxdesign.github.io/work/jidu</span></div>
+  <div class="chrome__spacer" aria-hidden="true"></div>
+</div>
+
+<main class="case" id="main">
+  <div class="case__inner">
+
+    <nav class="case__nav">
+      <a class="case__back" href="/">全部作品</a>
+      <span class="case__index">(004 / 006)</span>
+    </nav>
+
+    <header class="case__hero">
+      <h1 class="case__title">集度 · JIDU 数字座舱</h1>
+      <p class="case__subtitle">
+        独立负责 2D 导航与地图配置，输出 400+ 界面并参与 3D 地图设计。
+        车机是我第一次真正接触「交互复杂性」的项目——导航、地图、语音，
+        每一个都是在高速行驶的几秒钟内必须被读懂的信息。
+      </p>
+
+      <dl class="case__meta">
+        <div><dt>Time</dt><dd>2022.07 — 2024.10</dd></div>
+        <div><dt>Role</dt><dd>HMI 设计师</dd></div>
+        <div><dt>Scope</dt><dd>车机 HMI / 导航 / 地图</dd></div>
+        <div><dt>Output</dt><dd>400+ 界面 · Dark &amp; Light</dd></div>
+      </dl>
+    </header>
+
+    <figure class="case__cover">
+      <img src="/assets/images/work/jidu-01.jpg" alt="集度 ROBOCAR 数字座舱" width="1600" height="900" />
+    </figure>
+
+    <div class="case__stats" style="margin-top:clamp(3rem,6vw,5rem)">
+      <div class="case__stat"><strong>400+</strong><span>输出界面数量</span></div>
+      <div class="case__stat"><strong>98%</strong><span>上线还原度</span></div>
+      <div class="case__stat"><strong>2023</strong><span>Red Dot Design Award</span></div>
+    </div>
+
+    <section class="case__section" style="margin-top:0">
+      <p class="case__section-label">Context<span>项目背景</span></p>
+      <div class="case__body">
+        <p>
+          集度数字座舱（JIDU Digital Cockpit）是整车智能座舱的交互界面。
+          我负责其中导航与地图相关的部分：从首页的快捷入口、搜索、POI 详情、算路，到导航中的行程面板，
+          以及地图本身的绘制规范。
+        </p>
+        <p>
+          工作方式是独立负责 2D 导航项目的 UI 界面与地图配置，输出 UI 界面 400+，
+          并参与 3D 地图的部分设计。过程中积极且及时与开发沟通问题，
+          最终<strong>上线还原度达到 98%</strong>。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-02.jpg" alt="400+ 核心页面总览，Dark 与 Light 双主题" loading="lazy" width="1600" height="2324" />
+        <figcaption><b>Fig. 01</b> Core Page Display — 400+ 界面，Dark / Light 双主题</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 主流程 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Flow<span>主流程设计</span></p>
+      <div class="case__body">
+        <h3>首页</h3>
+        <p>
+          快捷指令操作区承载搜索、家、公司三个高频入口，其中家与公司支持自动通勤导航。
+          首页 icon 可直接快速进入导航界面。
+        </p>
+        <h3>搜索</h3>
+        <p>
+          搜索结果列表展示目的地名称与距离信息。POI 展示目的地相关信息，推荐 POI 带有首选的 icon 展示。
+          右侧面板区域的扎点，直观展示目的地距离当前位置的相对距离。列表化直观展示下方数据源，滑动查看更多信息。
+        </p>
+        <h3>POI 详情</h3>
+        <p>
+          用<strong>三色标签</strong>区分信息类型：智驾标签代表智能驾舱的地点，用品牌色承载；
+          重要标签如距离、营业时间等；普通标签为目的地的一般信息。
+          双色小标展示目的地多个出口的信息，下方可把此 POI 设置为途经点或终点。
+        </p>
+        <p>
+          收藏 icon 点击有动效展示，增加趣味性，也保持整体系统动效的一致性。
+          POI 的终点信息以及到达电量信息多用图形化表达，减少用户阅读信息的疲劳感。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-04.jpg" alt="首页：快捷指令操作区" loading="lazy" width="1600" height="900" />
+        <figcaption><b>Fig. 02</b> 首页 — 快捷指令操作区</figcaption>
+      </figure>
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-05.jpg" alt="POI 详情：标签体系、出口信息、途经点设置" loading="lazy" width="1600" height="900" />
+        <figcaption><b>Fig. 03</b> POI 详情 — 标签类型与到达电量信息</figcaption>
+      </figure>
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-06.jpg" alt="算路：三条路线方案与筛选项" loading="lazy" width="1600" height="900" />
+        <figcaption><b>Fig. 04</b> 算路 — 三方案与筛选策略</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 导航 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Navigation<span>导航与语音</span></p>
+      <div class="case__body">
+        <h3>算路策略</h3>
+        <p>
+          最终推送 3 条最优算路结果，倒计时 8 秒后默认以第一条作为最佳路线开始导航。
+          筛选项包括智能推荐、智驾优先、避免拥堵、时间短、少收费、不走高速、高速优先。
+        </p>
+        <h3>导航中</h3>
+        <p>
+          3D 区域展示红绿灯信息，红灯增加了动效设计，设计上也更符合现实。
+          行程面板展示整段路程的途经点和目的地信息：下一个途经点做高亮显示，走过的途经点置灰显示，
+          终点距离信息和预计到达时间进行轮播。最下方 icon 可以展开或收起整个面板并显示最近途经点 / 终点信息，
+          也可结束整个导航行程。
+        </p>
+        <p>
+          4D 区域显示下一个 TBT 信息：里程数、行驶方向、出口信息。
+        </p>
+        <h3>语音大模型</h3>
+        <p>
+          将 AI 能力（文心一言）赋予语音原子卡，品牌色沿用智驾的紫色——
+          让 AI 能力在视觉上有独立且可识别的身份。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-07.jpg" alt="导航：3D 驾驶信息、行程面板、TBT 信息" loading="lazy" width="1600" height="1258" />
+        <figcaption><b>Fig. 05</b> 导航 — 3D 区域驾驶信息与行程面板</figcaption>
+      </figure>
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-08.jpg" alt="语音大模型：AI 能力与语音原子卡" loading="lazy" width="1600" height="1380" />
+        <figcaption><b>Fig. 06</b> 语音大模型 — 文心一言能力接入</figcaption>
+      </figure>
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-03.jpg" alt="车机 Game Theme，Dark 与 Light 双主题" loading="lazy" width="1600" height="1981" />
+        <figcaption><b>Fig. 07</b> Game Theme — 车机主题延展</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 地图设计思考 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Thinking<span>地图设计思考</span></p>
+      <div class="case__body">
+        <p class="case__quote">系统性分析地图绘制的要求和逻辑。</p>
+        <p>
+          车机地图和普通 App 地图不一样：它是在驾驶场景下被扫一眼就要读懂的信息类工具。
+          我把它拆成四个问题来回答。
+        </p>
+
+        <h3>01 · 基础认知</h3>
+        <p>
+          <strong>符合制图学和公众认知</strong>：地图发展到现在已经成了一门学科，
+          即便语言不通，拿到一张地图也能看懂——这是因为有制图学和公众认知在规范着地图设计。
+          比如地图默认北向上、草地水系基本遵循物理世界的颜色、省界线是实线、停车场图标大多用 P 来代表。
+          符合这些约定，能大大降低用户的学习成本和记忆负担。
+        </p>
+        <p>
+          <strong>保证识别度</strong>：地图属于信息类工具，其上出现的元素均需清晰可识别，
+          保证可读性是最基本的设计原则，所以在设计时会限制颜色对比度、最小字号等，具体规则会根据场景确定。
+        </p>
+        <p>
+          <strong>清晰有层次</strong>：信息主次清晰，地图信息庞杂，要做到同类元素有关联性，不同元素有差异性。
+          同时信息主次也会根据比例尺的变化有所调整。
+          在业务场景中，地图通常作为最底层组件出现，上层还会有很多业务组件，
+          因此在设计时需克制用色——既要保证地图中各类元素之间的区隔度，又要保证地图整体与其他业务组件拉开视觉层级。
+        </p>
+
+        <h3>02 · 拆解地图</h3>
+        <p>
+          将地图拆分为<strong>基础层、策略层和感官层</strong>，帮助各职能角色找到对应切入点。
+        </p>
+        <div class="case__points case__points--3">
+          <article class="case__point">
+            <span class="case__point-num">基础层</span>
+            <h4>数据与能力</h4>
+            <p>引擎渲染能力、定位能力、图像识别能力等。有了数据及各类能力作为基础，才能设计出信息精准、交互明确的地图。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">策略层</span>
+            <h4>如何使用这些能力</h4>
+            <p>地图数据量非常庞大，无法全部展示，需要结合不同的场景及用户需求，有重点地呈现。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">感官层</span>
+            <h4>最终视觉呈现</h4>
+            <p>根据品牌调性、对应场景诉求等去设计最终的配色、图标等。</p>
+          </article>
+        </div>
+
+        <h3>03 · 元素显示策略</h3>
+        <p>
+          将地图元素详细拆分，更有利于分析每个元素的显示策略——分为面元素、线元素、点元素三类。
+        </p>
+        <p>
+          <strong>道路显示策略按比例尺分层</strong>：3–9 层级（2000km–25km）时只聚焦到每个城市和县区名称，
+          这一层级下的道路显示感知度不高；10–12 层级（20km–5km）道路层级显示为一级道路，
+          默认百度 / 高德本身的显示策略比较合适，显示比较清晰；
+          13–17 层级（2km–100m）一、二、三级道路都会显示，
+          因此层级的显示策略会对地图的整体性有较大影响，需要谨慎选择显示比例尺。
+        </p>
+        <p>
+          此外还有蚯蚓线（用颜色与线宽区分主路与备选路）、点元素（车标、POI、扎点、气泡）等元素的独立策略。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-09.jpg" alt="基础认知：符合制图学与公众认知、保证识别度、清晰有层次" loading="lazy" width="1600" height="1217" />
+        <figcaption><b>Fig. 08</b> 基础认知</figcaption>
+      </figure>
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-10.jpg" alt="元素显示策略：面元素、线元素、点元素与道路显示分层" loading="lazy" width="1600" height="3722" />
+        <figcaption><b>Fig. 09</b> 元素显示策略 — 道路分层与点线面元素</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 结果 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Outcome<span>结果</span></p>
+      <div class="case__body">
+        <p>
+          项目上线还原度 98%，并获 <strong>2023 Red Dot Design Award</strong>（JIDU Digital Cockpit）。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/jidu-11.jpg" alt="2023 Red Dot Design Award 获奖证书" loading="lazy" width="1600" height="900" />
+        <figcaption><b>Fig. 10</b> Red Dot Winner 2023 — JIDU Digital Cockpit</figcaption>
+      </figure>
+    </div>
+
+    <a class="case__next" href="/work/lenovo/">
+      <span class="case__next-label">Next project</span>
+      <span class="case__next-title">联想 · 乐云 LeCloud 3.0</span>
+    </a>
+
+  </div>
+
+  <div class="case__inner">
+    <div class="case__colophon">
+      <span>Zhou Xiaoxu — Portfolio</span>
+      <span>© <span id="year">2026</span> 周晓旭</span>
+      <span>Designed with Intent</span>
+    </div>
+  </div>
+</main>
+
+<script src="/main.js" defer></script>
+</body>
+</html>

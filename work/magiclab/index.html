@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>魔法原子 · MagicBot App 改版 | 周晓旭</title>
+<meta name="description" content="面向 MagicBot X1 的 App 整体改版：覆盖数采、任务、操控、地图等核心业务，以及四足 / 轮式 / 人形产品线，输出 300+ 界面。" />
+
+<meta property="og:type" content="article" />
+<meta property="og:title" content="魔法原子 · MagicBot App 改版" />
+<meta property="og:description" content="从「驾驶员」到「安全员」——具身智能时代，移动端遥控器的设计逻辑重建。" />
+<meta property="og:image" content="/assets/images/work/magiclab-01.jpg" />
+<meta name="theme-color" content="#ffffff" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23fff'%3EZ%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/work.css" />
+</head>
+
+<body>
+<a class="skip" href="#main">跳到正文</a>
+
+<div class="chrome">
+  <div class="chrome__lights" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="chrome__tab">Portfolio — 2026</div>
+  <div class="chrome__url"><span>zhou-xxdesign.github.io/work/magiclab</span></div>
+  <div class="chrome__spacer" aria-hidden="true"></div>
+</div>
+
+<main class="case" id="main">
+  <div class="case__inner">
+
+    <nav class="case__nav">
+      <a class="case__back" href="/">全部作品</a>
+      <span class="case__index">(001 / 006)</span>
+    </nav>
+
+    <!-- ===================== Hero ===================== -->
+    <header class="case__hero">
+      <h1 class="case__title">魔法原子 · MagicBot App 改版</h1>
+      <p class="case__subtitle">
+        面向 MagicBot X1 的 App 整体改版。在具身智能的语境下重新定义移动端遥控器——
+        从「实时操控」转向「任务下发」，让机器人从被驾驶的对象，变成能自主行动的协作者。
+      </p>
+
+      <dl class="case__meta">
+        <div><dt>Time</dt><dd>2026.03 — 至今</dd></div>
+        <div><dt>Role</dt><dd>UI/UX 设计师</dd></div>
+        <div><dt>Scope</dt><dd>移动端 / 网页端</dd></div>
+        <div><dt>Output</dt><dd>300+ 界面</dd></div>
+      </dl>
+    </header>
+
+    <figure class="case__cover">
+      <img src="/assets/images/work/magiclab-01.jpg" alt="MagicBot App 主界面" width="1600" height="900" />
+    </figure>
+
+    <div class="case__stats" style="margin-top:clamp(3rem,6vw,5rem)">
+      <div class="case__stat"><strong>300+</strong><span>输出界面数量</span></div>
+      <div class="case__stat"><strong>2</strong><span>代机型统一客户端（Gen1 / X1）</span></div>
+      <div class="case__stat"><strong>5</strong><span>周设计周期（调研到视觉交付）</span></div>
+    </div>
+
+    <!-- ===================== 背景 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Context<span>项目背景</span></p>
+      <div class="case__body">
+        <p>
+          伴随新一代机器人产品 <strong>MagicBot X1</strong> 即将上线，原有 APP 架构无法充分发挥 X1 的硬件能力。
+          因此启动 APP 整体改版升级：一方面针对 Gen1 存量用户反馈问题做专项优化，修复现存体验短板；
+          另一方面完成对 X1 的全功能适配，拓展 APP 能力边界。
+        </p>
+        <p>
+          同时还要保障存量 MagicBot Gen1 设备兼容可用，实现<strong>新旧两代机器人统一客户端管理</strong>——
+          这是这次改版最核心的约束条件。
+        </p>
+        <p>
+          设计要求来自实际落地过程中收集的大量用户反馈：现有功能流程、交互逻辑存在可优化点，
+          部分体验短板限制了设备使用效率。需要贴合品牌特征优化整体操作流程，删减无效交互层级，
+          实现高频关键功能丝滑触达，同时兼顾 Gen1 与 X1 双设备的操作流畅度。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 核心命题 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Key idea<span>核心命题</span></p>
+      <div class="case__body">
+        <p class="case__quote">遥控器从「驾驶员」，变成「安全员」。</p>
+        <p>
+          当看向具身智能这一宏大命题，传统遥控器方案便显得不再适配。这意味着 APP 遥控页面的设计逻辑需要重新权衡；
+          而在盲操作的使用条件下，物理硬件操控的天然优势依旧十分突出。
+        </p>
+        <p>
+          最终确立的人机分工是：<strong>移动端负责抽象的任务设置</strong>，
+          机器人凭借自身感知能力，在真实环境自主规划、行动。
+          移动端的核心价值集中在任务层处理，而非机器人实时表演的直接操控——
+          诸如地图构建、自定义任务创建这类步骤繁琐、参数较多的复杂操作，由移动端承载，能够获得更好的操作体验。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 主要功能 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Functions<span>主要功能</span></p>
+      <div class="case__body">
+        <div class="case__points case__points--2">
+          <article class="case__point">
+            <span class="case__point-num">01</span>
+            <h4>机器人遥控</h4>
+            <p>远程精准操控。步态与动作以转盘、摇杆承载，兼顾盲操作与横屏双手握持。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">02</span>
+            <h4>设备切换</h4>
+            <p>多机一键管理。同一客户端内管理 Gen1 与 X1，机型之间连贯切换。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">03</span>
+            <h4>状态查询</h4>
+            <p>数据实时可视。电量、温度、网络等状态以图形语言表达，故障位置对应本体可视化。</p>
+          </article>
+          <article class="case__point">
+            <span class="case__point-num">04</span>
+            <h4>地图导览</h4>
+            <p>全域空间导航。地图构建、POI 与底图编辑，为任务下发提供空间基础。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 图组：流程与规范 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Process<span>设计流程</span></p>
+      <div class="case__body">
+        <p>
+          我的设计遵循一套完整严谨的流程，力求在功能的创新与直观易用的体验之间取得平衡。
+          项目初期开展深度市场调研与竞品分析，随后通过低保真线框图梳理出产品的核心逻辑，
+          再进入高保真视觉设计。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/magiclab-03.jpg" alt="五周设计流程：Research → Discovery → Prototyping → Designing" loading="lazy" width="1600" height="900" />
+        <figcaption><b>Fig. 01</b> 五周设计流程</figcaption>
+      </figure>
+
+      <figure class="case__figure">
+        <img src="/assets/images/work/magiclab-02.jpg" alt="产品设计说明：产品背景、主要功能、设计要求" loading="lazy" width="1600" height="1676" />
+        <figcaption><b>Fig. 02</b> 产品设计说明</figcaption>
+      </figure>
+
+      <figure class="case__figure">
+        <img src="/assets/images/work/magiclab-04.jpg" alt="色彩规范：主色与警示色" loading="lazy" width="1600" height="900" />
+        <figcaption><b>Fig. 03</b> 色彩规范 — 色彩是 app 识别的一部分</figcaption>
+      </figure>
+
+      <figure class="case__figure">
+        <img src="/assets/images/work/magiclab-05.jpg" alt="字体规范与图标设计" loading="lazy" width="1600" height="2028" />
+        <figcaption><b>Fig. 04</b> 字体与图标规范</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 页面架构 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Structure<span>页面架构</span></p>
+      <div class="case__body">
+        <h3>未连接机器人</h3>
+        <p>
+          用户可以提前观看机器人的教学引导，为下一步连接做准备，同时积极引导用户添加机器人，体验更多玩法。
+        </p>
+        <h3>已连接机器人</h3>
+        <p>
+          用户可以直观看到当前连接机器人的状态和型号，并且体验更多核心功能（应用模式 / 地图 / 操控）。
+        </p>
+        <h3>操控模式</h3>
+        <p>
+          基础步态「站立」是常用模式。步态整体的交互形式参考转盘，和摇杆设计呼应。
+          更多功能放置在右上角，符合双手横屏操作手机遥控器的姿势。
+          机器人视角卡打开后可以和常规视角进行切换。
+        </p>
+        <p>
+          支持切换查看不同型号的机器人，直观掌握当前可添加的设备。横屏操作模式下整体布局也是左右操作，
+          更符合人体工学。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/magiclab-06.jpg" alt="页面架构：未连接状态、连接状态、遥控模式、选择模式" loading="lazy" width="1600" height="2237" />
+        <figcaption><b>Fig. 05</b> 页面架构适配用户需求</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 改版前后 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Redesign<span>改版前后</span></p>
+      <div class="case__body">
+        <h3>登录 / 注册</h3>
+        <p>
+          启动页新增快捷登录入口，搭载本机号码一键登录能力。删减冗余跳转环节，压缩登录操作路径，
+          实现轻量化登录，让用户无需繁琐输入即可快速进入主程序，第一时间体验机器人相关功能。
+        </p>
+        <h3>核心用户流程</h3>
+        <p>
+          页面背景复用品牌全部机型视觉素材，塑造统一品牌视觉印象，加深用户对全产品线认知。
+          设备未连接空态页面，将教学、添加设备作为核心焦点功能重点展示；
+          即便机器人未完成配网连接，用户仍可先行查阅操作教学，提前掌握使用方式，降低后续上手成本。
+        </p>
+        <p>
+          连接成功状态下的首页，以当前接入的机器人为视觉主体，整页视觉围绕该机型延展，
+          重点呈现机型专属特点，强化用户对本机的感知；更具风格化的机型切换能力，
+          让用户便捷完成不同型号之间的切换，操作连贯无卡顿。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/magiclab-07.jpg" alt="改版前后对比与核心用户流程" loading="lazy" width="1600" height="3918" />
+        <figcaption><b>Fig. 06</b> 改版前 / 改版后 · 核心用户流程</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 关键交互 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Interaction<span>关键交互</span></p>
+      <div class="case__body">
+        <h3>设备连接引导</h3>
+        <p>
+          连接流程采用图文结合的引导形式，支持按机器人型号展示专属图文提示，不同机型呈现适配的操作说明，
+          信息区分明确，让用户快速读懂配网步骤。
+        </p>
+        <h3>遥控：借鉴游戏操控逻辑</h3>
+        <p>
+          遥控页面借鉴游戏操控的交互逻辑，让用户可以快速熟悉机器人操控。步态模块为转盘式交互，
+          右手触发唤起转盘，通过滑动浏览全部步态列表。支持摇杆选择快捷动作，保持交互的一致性。
+          支持机器人视角预览，该视角优先放大画面占比；当摇杆处于闲置未操作状态时，
+          摇杆组件做缩小处理，减少画面遮挡。
+        </p>
+        <h3>特级创造</h3>
+        <p>
+          应用模式提供特技创造能力：用户上传个人动作素材，机器人完成动作学习与模拟复现，系统输出成片，
+          支持视频裁剪处理，可直接发布至网络平台，产出个性化机器人特技短片。
+          这一能力还拓展至老年人康复领域——机器人可载入康复教学视频并还原标准训练动作，
+          让康复人群能够低成本完成居家康复练习。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/magiclab-08.jpg" alt="遥控页面的转盘式步态交互与摇杆" loading="lazy" width="1600" height="1420" />
+        <figcaption><b>Fig. 07</b> 遥控 · 转盘式步态交互</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 结果 ===================== -->
+    <section class="case__section">
+      <p class="case__section-label">Outcome<span>结果</span></p>
+      <div class="case__body">
+        <p>
+          最终交付覆盖登录、设备管理、首页、遥控、地图、任务、应用模式等完整链路的
+          <strong>300+ 界面</strong>，形成 Gen1 与 X1 统一的新版客户端。
+        </p>
+        <p>
+          其中「前期方案尝试」阶段探索过几套差异较大的视觉方向（含荧光绿、青色等方案），
+          但因风格过于多变、偏离核心功能表达而未被采纳——这段探索反而帮助团队收敛到了最终方向：
+          <strong>更聚焦核心功能，更克制地使用品牌色</strong>。
+        </p>
+      </div>
+    </section>
+
+    <div class="case__figures">
+      <figure class="case__figure">
+        <img src="/assets/images/work/magiclab-09.jpg" alt="300+ 界面总览" loading="lazy" width="1600" height="2112" />
+        <figcaption><b>Fig. 08</b> +300 screens</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===================== 下一个 ===================== -->
+    <a class="case__next" href="/work/design-system/">
+      <span class="case__next-label">Next project</span>
+      <span class="case__next-title">Magic Design System 1.0</span>
+    </a>
+
+  </div>
+
+  <div class="case__inner">
+    <div class="case__colophon">
+      <span>Zhou Xiaoxu — Portfolio</span>
+      <span>© <span id="year">2026</span> 周晓旭</span>
+      <span>Designed with Intent</span>
+    </div>
+  </div>
+</main>
+
+<script src="/main.js" defer></script>
+</body>
+</html>

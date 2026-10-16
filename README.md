@@ -21,11 +21,50 @@ python3 -m http.server 8000
 
 ```
 .
-├── index.html      # 页面内容 —— 所有文案都在这里
-├── styles.css      # 全部样式（含设计变量、响应式、动画）
-├── main.js         # 两个小交互：页脚年份、卡片滚动渐入
-└── assets/images/  # 图片资源
+├── index.html          # 首页 —— Hero / 作品 / 关于 / 经历 / 联系
+├── styles.css          # 首页样式（含设计变量、响应式、动画）
+├── work.css            # 项目详情页样式（依赖 styles.css 的变量）
+├── main.js             # 两个小交互：页脚年份、卡片滚动渐入
+├── work/               # 6 个项目详情页
+│   ├── magiclab/index.html
+│   ├── design-system/index.html
+│   ├── agibot/index.html
+│   ├── jidu/index.html
+│   ├── lenovo/index.html
+│   └── explore/index.html
+└── assets/images/
+    ├── *.jpg           # 首页用图
+    └── work/*.jpg      # 详情页用图
 ```
+
+> 详情页放在 `work/<slug>/index.html`，GitHub Pages 会以 `/work/<slug>/` 提供。
+> 所有页面统一用**根相对路径**（`/styles.css`、`/assets/...`），因为这是用户站点，始终在域名根目录。
+
+## 项目详情页
+
+每个项目一个独立页面，结构统一：
+
+| 区块 | 说明 |
+|---|---|
+| 返回条 | 「全部作品」+ 序号 `(00N / 006)` |
+| Hero | 标题 / 一句话概述 / 四格元信息（Time · Role · Scope · Output） |
+| 首图 | 项目主视觉 |
+| 数据条 | 3 个关键数字（可选） |
+| `case__section` | 左栏等宽小标签 + 右栏正文，可含 `case__points` 编号要点 |
+| `case__figure` | 配图 + 等宽图注（`Fig. 01`） |
+| 下一个项目 | 循环跳转，最后一个回到第一个 |
+
+### 加一个项目详情页
+
+1. 新建 `work/<slug>/index.html`，复制任意现有详情页改内容（结构保持一致）
+2. 配图放进 `assets/images/work/`，命名 `<slug>-01.jpg` 递增
+3. 在 `index.html` 里加一张卡片，`href` 指向 `/work/<slug>/`
+4. 改所有详情页的 `case__index` 序号和 `case__next` 链，形成闭环
+
+### 详情页可用的样式类
+
+`case__meta`（元信息栅格）· `case__stats` / `case__stat`（数据条）· `case__quote`（手写体金句）·
+`case__points` + `case__points--2` / `--3` + `case__point`（编号要点）· `case__figures` / `case__figure`（配图组）
 
 ## 设计语言
 
@@ -47,11 +86,12 @@ python3 -m http.server 8000
 全部在 `index.html` 里，按区块从上到下排列：Hero → 作品 → 关于 → 经历 → 联系。
 
 ### 加一个作品
-复制任意一个 `<article class="card">` 整块，改三处：
+在 `index.html` 里复制任意一个 `<article class="card">` 整块，改四处：
 
-1. `<img src="...">` 换成新图（放进 `assets/images/`，建议宽 1600px、JPG 质量 82）
-2. `<h2 class="card__title">` 改成项目名
-3. 两处元信息（`card__meta` 和 `card__meta-inline`）里的 Time / Project / Introduction 保持一致
+1. `<a class="card__link" href="/work/<slug>/">` 指向新的详情页
+2. `<img src="...">` 换成新图（放进 `assets/images/`，建议宽 1600px、JPG 质量 82）
+3. `<h2 class="card__title">` 改成项目名
+4. 两处元信息（`card__meta` 和 `card__meta-inline`）里的 Time / Project / Introduction 保持一致
 
 > `card__meta` 是宽屏悬停浮层，`card__meta-inline` 是窄屏静态展示——**两处都要改**，内容必须相同。
 >
