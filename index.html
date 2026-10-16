@@ -1,60 +1,317 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zhuangzhuang | Designer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <style>
-      body {
-        margin: 0;
-        background-color: #ffffff;
-        font-family: 'Inter', sans-serif;
-        color: #000;
-        overflow-x: hidden;
-      }
-      .font-handwritten {
-        font-family: 'Caveat', cursive;
-      }
-      .font-mono-tech {
-        font-family: 'Space Mono', monospace;
-      }
-      ::selection {
-        background-color: #000;
-        color: #fff;
-      }
-      ::-webkit-scrollbar {
-        width: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #fff;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #e5e5e5;
-        border-radius: 10px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #000;
-      }
-    </style>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>周晓旭 Zhou Xiaoxu | UI/UX 设计师 · 机器人交互与车机 HMI</title>
+<meta name="description" content="周晓旭，UI/UX 设计师。5 年经验，专注机器人与智能座舱的交互设计。2023 红点设计奖得主，现于魔法原子负责机器人 App 与设计系统。" />
 
-<link rel="stylesheet" href="/index.css">
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
-  <script type="module" crossorigin src="/assets/index-BlBM-uKD.js"></script>
+<meta property="og:type" content="website" />
+<meta property="og:title" content="周晓旭 Zhou Xiaoxu | UI/UX 设计师" />
+<meta property="og:description" content="从车机 HMI 到人形机器人，把复杂的机器能力翻译成一眼就懂的界面。" />
+<meta property="og:image" content="assets/images/work-magiclab.jpg" />
+<meta name="theme-color" content="#ffffff" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23fff'%3EZ%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script>document.documentElement.classList.add("js");</script>
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+<a class="skip" href="#works">跳到作品</a>
+
+<!-- ===================== 顶部：浏览器窗口外框 ===================== -->
+<div class="chrome">
+  <div class="chrome__lights" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="chrome__tab">Portfolio — 2026</div>
+  <div class="chrome__url"><span>zhou-xxdesign.github.io</span></div>
+  <div class="chrome__spacer" aria-hidden="true"></div>
+</div>
+
+<main>
+  <!-- ===================== Hero ===================== -->
+  <section class="hero">
+    <nav class="hero__nav" aria-label="主导航">
+      <a href="#contact">contact</a>
+      <a href="#works">works</a>
+      <a href="#about">about</a>
+    </nav>
+
+    <h1 class="hero__hello">-hello.</h1>
+
+    <div class="hero__name">
+      <p class="hero__name-text">
+        zhou xiaoxu<span class="cursor" aria-hidden="true"></span>
+      </p>
+      <span class="hero__name-tag">[ui/ux · hmi · robotics]</span>
+    </div>
+
+    <a class="hero__scroll" href="#works" aria-label="向下浏览作品">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M7 10L1 4H13L7 10Z" fill="currentColor" />
+      </svg>
+    </a>
+  </section>
+
+  <!-- ===================== 作品 ===================== -->
+  <section id="works" class="works">
+    <div class="works__head">
+      <p class="works__title">
+        Selected Projects.<span class="cursor" aria-hidden="true"></span>
+      </p>
+      <p class="works__count">(001 — 006)</p>
+    </div>
+
+    <div class="grid">
+      <!-- 01 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="assets/images/work-magiclab.jpg" alt="魔法原子 MagicBot 系列机器人" loading="lazy" width="1600" height="900" />
+          <div class="card__overlay">
+            <dl class="card__meta">
+              <div><dt>Time</dt><dd>2026 — 至今</dd></div>
+              <div><dt>Project</dt><dd>机器人移动端 / 网页端</dd></div>
+              <div><dt>Introduction</dt><dd>面向 MagicBot X1 的 App 整体改版，覆盖数采、任务、操控、地图等核心业务，输出 300+ 界面。</dd></div>
+            </dl>
+          </div>
+        </div>
+        <h2 class="card__title">魔法原子 · MagicBot App 改版</h2>
+        <dl class="card__meta-inline">
+          <div><dt>Time</dt><dd>2026 — 至今</dd></div>
+          <div><dt>Project</dt><dd>机器人移动端 / 网页端</dd></div>
+          <div><dt>Introduction</dt><dd>面向 MagicBot X1 的 App 整体改版，覆盖数采、任务、操控、地图等核心业务，输出 300+ 界面。</dd></div>
+        </dl>
+        <span class="card__rule" aria-hidden="true"></span>
+      </article>
+
+      <!-- 02 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="assets/images/work-designsystem.jpg" alt="Magic Design System 1.0" loading="lazy" width="1600" height="900" />
+          <div class="card__overlay">
+            <dl class="card__meta">
+              <div><dt>Time</dt><dd>2026</dd></div>
+              <div><dt>Project</dt><dd>设计系统 / 组件库</dd></div>
+              <div><dt>Introduction</dt><dd>从全局属性到组件库的完整体系：色彩、字体、间距、圆角规范，32px 图标栅格与机器人表情延展。</dd></div>
+            </dl>
+          </div>
+        </div>
+        <h2 class="card__title">Magic Design System 1.0</h2>
+        <dl class="card__meta-inline">
+          <div><dt>Time</dt><dd>2026</dd></div>
+          <div><dt>Project</dt><dd>设计系统 / 组件库</dd></div>
+          <div><dt>Introduction</dt><dd>从全局属性到组件库的完整体系：色彩、字体、间距、圆角规范，32px 图标栅格与机器人表情延展。</dd></div>
+        </dl>
+        <span class="card__rule" aria-hidden="true"></span>
+      </article>
+
+      <!-- 03 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="assets/images/work-agibot.jpg" alt="智元机器人 AGIBOT X2 操控界面" loading="lazy" width="1600" height="1223" />
+          <div class="card__overlay">
+            <dl class="card__meta">
+              <div><dt>Time</dt><dd>2024 — 2026</dd></div>
+              <div><dt>Project</dt><dd>机器人移动端 / 表情设计</dd></div>
+              <div><dt>Introduction</dt><dd>双足人形机器人操作系统。60+ 核心页面、地图与任务管理，以及三代机器人表情设计（A2 / X2 / G2）。</dd></div>
+            </dl>
+          </div>
+        </div>
+        <h2 class="card__title">智元机器人 · AgiBot App</h2>
+        <dl class="card__meta-inline">
+          <div><dt>Time</dt><dd>2024 — 2026</dd></div>
+          <div><dt>Project</dt><dd>机器人移动端 / 表情设计</dd></div>
+          <div><dt>Introduction</dt><dd>双足人形机器人操作系统。60+ 核心页面、地图与任务管理，以及三代机器人表情设计（A2 / X2 / G2）。</dd></div>
+        </dl>
+        <span class="card__rule" aria-hidden="true"></span>
+      </article>
+
+      <!-- 04 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="assets/images/work-jidu.jpg" alt="集度 ROBOCAR 数字座舱" loading="lazy" width="1600" height="900" />
+          <div class="card__overlay">
+            <dl class="card__meta">
+              <div><dt>Time</dt><dd>2022 — 2024</dd></div>
+              <div><dt>Project</dt><dd>车机 HMI / 导航</dd></div>
+              <div><dt>Introduction</dt><dd>独立负责 2D 导航与地图设计，输出 400+ 界面（Dark / Light 双主题），上线还原度 98%。获 2023 红点设计奖。</dd></div>
+            </dl>
+          </div>
+        </div>
+        <h2 class="card__title">集度 · JIDU 数字座舱</h2>
+        <dl class="card__meta-inline">
+          <div><dt>Time</dt><dd>2022 — 2024</dd></div>
+          <div><dt>Project</dt><dd>车机 HMI / 导航</dd></div>
+          <div><dt>Introduction</dt><dd>独立负责 2D 导航与地图设计，输出 400+ 界面（Dark / Light 双主题），上线还原度 98%。获 2023 红点设计奖。</dd></div>
+        </dl>
+        <span class="card__rule" aria-hidden="true"></span>
+      </article>
+
+      <!-- 05 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="assets/images/work-lenovo.jpg" alt="联想乐云 LeCloud 3.0" loading="lazy" width="1600" height="917" />
+          <div class="card__overlay">
+            <dl class="card__meta">
+              <div><dt>Time</dt><dd>2021 — 2022</dd></div>
+              <div><dt>Project</dt><dd>多端产品设计 · 实习</dd></div>
+              <div><dt>Introduction</dt><dd>首页布局重组与托盘方案升级，用时间轴引导和毛玻璃层级强化多设备信息共享，最多支持 9 个设备。</dd></div>
+            </dl>
+          </div>
+        </div>
+        <h2 class="card__title">联想 · 乐云 LeCloud 3.0</h2>
+        <dl class="card__meta-inline">
+          <div><dt>Time</dt><dd>2021 — 2022</dd></div>
+          <div><dt>Project</dt><dd>多端产品设计 · 实习</dd></div>
+          <div><dt>Introduction</dt><dd>首页布局重组与托盘方案升级，用时间轴引导和毛玻璃层级强化多设备信息共享，最多支持 9 个设备。</dd></div>
+        </dl>
+        <span class="card__rule" aria-hidden="true"></span>
+      </article>
+
+      <!-- 06 -->
+      <article class="card">
+        <div class="card__media">
+          <img src="assets/images/explore-3d.jpg" alt="3D 渲染与 AIGC 探索作品" loading="lazy" width="1600" height="1167" />
+          <div class="card__overlay">
+            <dl class="card__meta">
+              <div><dt>Time</dt><dd>2023 — 至今</dd></div>
+              <div><dt>Project</dt><dd>3D 渲染 / AIGC</dd></div>
+              <div><dt>Introduction</dt><dd>用 Blender 做 3D 渲染与产品可视化，AIGC 生成概念再进 Blender 打磨，可 3D 打印落地。《宇宙漫游》获人气奖。</dd></div>
+            </dl>
+          </div>
+        </div>
+        <h2 class="card__title">探索 · 3D 与 AIGC</h2>
+        <dl class="card__meta-inline">
+          <div><dt>Time</dt><dd>2023 — 至今</dd></div>
+          <div><dt>Project</dt><dd>3D 渲染 / AIGC</dd></div>
+          <div><dt>Introduction</dt><dd>用 Blender 做 3D 渲染与产品可视化，AIGC 生成概念再进 Blender 打磨，可 3D 打印落地。《宇宙漫游》获人气奖。</dd></div>
+        </dl>
+        <span class="card__rule" aria-hidden="true"></span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 关于 / 经历 / 联系 ===================== -->
+  <footer id="about" class="about">
+    <div class="about__top">
+      <div class="about__intro">
+        <h2 class="about__name">周晓旭·</h2>
+        <p class="about__blurb">
+          5 年经验的 UI/UX 设计师。<br />
+          从车机 HMI 到人形机器人，<br />
+          一直在把复杂的机器能力，<br />
+          翻译成普通人一眼就懂的界面。
+        </p>
+      </div>
+
+      <div class="about__portrait">
+        <img src="assets/images/portrait.jpg" alt="周晓旭" width="800" height="1000" loading="lazy" />
+      </div>
+    </div>
+
+    <!-- 经历与荣誉 -->
+    <div class="facts">
+      <div class="facts__col">
+        <h3 class="facts__label">Experience</h3>
+        <ul class="facts__list">
+          <li>
+            <span class="facts__date">2026.03 — 至今</span>
+            <span class="facts__org">魔法原子 magiclab</span>
+            <span class="facts__role">UI/UX 设计师</span>
+          </li>
+          <li>
+            <span class="facts__date">2024.10 — 2026.03</span>
+            <span class="facts__org">智元机器人 AgiBot</span>
+            <span class="facts__role">UI/UX 设计师</span>
+          </li>
+          <li>
+            <span class="facts__date">2022.07 — 2024.10</span>
+            <span class="facts__org">集度汽车 JIDU</span>
+            <span class="facts__role">HMI 设计师</span>
+          </li>
+          <li>
+            <span class="facts__date">2021.11 — 2022.07</span>
+            <span class="facts__org">联想 Lenovo</span>
+            <span class="facts__role">UI 设计师 · 实习</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="facts__col">
+        <h3 class="facts__label">Education</h3>
+        <ul class="facts__list">
+          <li>
+            <span class="facts__date">2021.09 — 2022.12</span>
+            <span class="facts__org">伯明翰大学 · 英国</span>
+            <span class="facts__role">人机交互 Human-Computer Interaction</span>
+          </li>
+          <li>
+            <span class="facts__date">2019.09 — 2020.01</span>
+            <span class="facts__org">佩奇大学 · 匈牙利 交换</span>
+            <span class="facts__role">建筑设计</span>
+          </li>
+          <li>
+            <span class="facts__date">2017.09 — 2021.06</span>
+            <span class="facts__org">湖北工业大学 · 武汉</span>
+            <span class="facts__role">环境设计</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="facts__col">
+        <h3 class="facts__label">Awards</h3>
+        <ul class="facts__list">
+          <li>
+            <span class="facts__date">2023</span>
+            <span class="facts__org">Red Dot Design Award</span>
+            <span class="facts__role">JIDU Digital Cockpit</span>
+          </li>
+          <li>
+            <span class="facts__date">2023.10</span>
+            <span class="facts__org">阿里云 × 森马 AIGC 设计大赛</span>
+            <span class="facts__role">《宇宙漫游》· 人气奖</span>
+          </li>
+          <li>
+            <span class="facts__date">2018 / 2019</span>
+            <span class="facts__org">校级奖学金</span>
+            <span class="facts__role">二等奖学金 · 三等奖学金</span>
+          </li>
+        </ul>
+
+        <figure class="facts__award">
+          <img src="assets/images/award-reddot.jpg" alt="2023 Red Dot Design Award 获奖证书" loading="lazy" width="1600" height="900" />
+          <figcaption>Red Dot Winner 2023 — JIDU Digital Cockpit</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- 联系 -->
+    <div class="contact" id="contact">
+      <a class="contact__mail" href="mailto:zhouxiaoxuzxx@126.com">
+        <span class="contact__mail-l1">zhouxiaoxuzxx</span>
+        <span class="contact__mail-l2">@126.com</span>
+      </a>
+
+      <ul class="contact__list">
+        <li><span>WeChat</span>ZXX_8861</li>
+        <li><span>Based in</span>中国</li>
+      </ul>
+    </div>
+
+    <div class="colophon">
+      <span>Zhou Xiaoxu — Portfolio</span>
+      <span>© <span id="year">2026</span> 周晓旭</span>
+      <span>Designed with Intent</span>
+    </div>
+  </footer>
+</main>
+
+<script src="main.js" defer></script>
 </body>
 </html>
