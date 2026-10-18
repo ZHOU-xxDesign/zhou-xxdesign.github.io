@@ -111,13 +111,83 @@ python3 -m http.server 8000
 - 卡片渐入只在 JS 可用时生效（`html.js` 门控），JS 加载失败不会白屏
 - 键盘可达：跳转链接、`:focus-visible` 描边
 
+## 版本管理与发布
+
+### 分支策略
+
+只有 `main` 一个长期分支，**`main` 即生产**。推送到 `main` 后 GitHub Pages 自动构建发布，不需要额外的 CI。
+
+改一个小地方不想立刻上线时，开临时分支，满意了再合并：
+
+```bash
+git switch -c fix/hero-spacing     # 开分支
+# ...改东西...
+git add -A && git commit -m "fix: 修正首屏标题间距"
+git switch main && git merge fix/hero-spacing
+git push origin main
+git branch -d fix/hero-spacing
+```
+
+### 提交信息约定
+
+用 `类型: 简述` 的格式，方便回看历史时一眼分清改动性质：
+
+| 类型 | 用途 | 例子 |
+|---|---|---|
+| `feat` | 新增页面、区块、功能 | `feat: 新增论文页面` |
+| `fix` | 修 bug、排版问题 | `fix: 移动端联系区邮箱溢出` |
+| `content` | 只改文案、换图 | `content: 更新集度项目的成果数据` |
+| `style` | 只改样式，不改结构 | `style: 作品卡片悬停加箭头` |
+| `docs` | README / CHANGELOG | `docs: 补充详情页新增步骤` |
+| `chore` | 版本管理、配置 | `chore: 更新 .gitignore` |
+
+### 标签（版本）
+
+每次内容或结构上有意义的节点打一个标签，方便随时回退到某个已知good的状态：
+
+```bash
+git tag -a v1.2.0 -m "新增论文页面"     # 打标签（-a 是带说明的标签）
+git push origin v1.2.0                  # 标签要单独推送
+git tag -l                              # 查看所有标签
+```
+
+版本号怎么升，见 `CHANGELOG.md` 顶部的说明。
+
+### 回滚
+
+```bash
+# 方案 A：撤销某次提交的改动，保留后续提交（安全，推荐）
+git revert <commit-hash>
+git push origin main
+
+# 方案 B：临时看一眼某个旧版本（不动 main）
+git switch --detach v1.0.0
+
+# 方案 C：把 main 整体退回某个标签（会改写历史，慎用）
+git reset --hard v1.0.0
+git push --force-with-lease origin main
+```
+
+线上出问题时，也可以在 GitHub 仓库的 **Actions / Deployments** 里看到每次部署记录；
+如果要紧急下线，在 **Settings → Pages** 里把 Source 改成 `None` 即可。
+
+### 提交前自检
+
+```bash
+git status                 # 确认没有意外文件
+git diff --cached          # 看一遍将要提交的内容
+```
+
+`.gitignore` 已经把 `mydata/`、`*.pdf`、`.DS_Store` 排除在外——
+**简历和作品集原始 PDF 绝不能进这个仓库**，否则会随 GitHub Pages 一起公开。
+
 ## 部署
 
 推送到 `main` 即可，GitHub Pages 会自动构建：
 
 ```bash
 git add -A
-git commit -m "更新作品集内容"
+git commit -m "content: 更新作品集内容"
 git push origin main
 ```
 

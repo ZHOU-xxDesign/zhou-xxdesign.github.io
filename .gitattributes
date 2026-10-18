@@ -1,0 +1,16 @@
+# 统一换行符，避免不同系统下产生无意义的整文件 diff
+* text=auto eol=lf
+
+*.html text eol=lf
+*.css  text eol=lf
+*.js   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+
+# 图片按二进制处理，不做文本 diff
+*.jpg  binary
+*.jpeg binary
+*.png  binary
+*.webp binary
+*.gif  binary
+*.ico  binary
