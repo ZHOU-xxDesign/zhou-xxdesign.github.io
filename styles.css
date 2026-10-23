@@ -230,6 +230,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (min-width: 768px) {
   .hero__name-text { font-size: 3rem; }
 }
+
+/* 名字后面的别名。等宽字体下一个字约 0.6em，2.4em ≈ 空四个字符的位置 */
+.hero__name-alt { margin-left: 2.4em; }
+
+/* 窄屏放不下两个名字（zhou xiaoxu 本身就占约 240px），
+   在别名前断行；光标仍留在整行末尾 */
+.hero__name-br { display: none; }
+
+@media (max-width: 767px) {
+  .hero__name-br { display: inline; }
+  .hero__name-alt { margin-left: 0; }
+}
 .hero__name:hover .hero__name-text { letter-spacing: 0; }
 
 /* hover 才出现的小标签 */
