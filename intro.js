@@ -4,7 +4,7 @@
      1. 打印机从下方淡入
      2. hello. / i'm zoya. 逐字打在纸上，纸同时不断向上长
      3. 整张纸放大到铺满视口，打印机淡出
-     4. 停留 2s（光标闪）
+     4. 停留 1.2s（光标闪）
      5. 淡出，露出原来的首屏（hero 的入场动画这时才开始）
 
    参数：?intro=1 强制播放 · ?intro=0 跳过 · ?introAt=3400 定格某一帧（调试用）
@@ -43,7 +43,7 @@
   const CHAR_IN = 120;      // 单字"落"下来的时长
   const TYPE_TAIL = 280;    // 打完最后一个字后的停顿
   const ZOOM_MS = 1050;
-  const HOLD_MS = 2000;
+  const HOLD_MS = 1200;
   const OUT_MS = 780;
   const H0 = 0.62;          // 纸的起始高度（占满高比例）
 
