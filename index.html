@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="/styles.css?v=6" />
 <link rel="stylesheet" href="/vinyl/vinyl.css?v=3" />
 <link rel="stylesheet" href="/vinyl/stage.css?v=14" />
-<link rel="stylesheet" href="/intro.css?v=5" />
+<link rel="stylesheet" href="/intro.css?v=7" />
 <script>
 /* 开场只在每个标签页第一次进入时播一次；尊重系统「减弱动效」。
    ?intro=1 强制播放，?intro=0 跳过，?introAt=3400 定格调试。 */
@@ -232,7 +232,7 @@
   </footer>
 </main>
 
-<!-- ===================== 开场：打字机 ===================== -->
+<!-- ===================== 开场：打印机 ===================== -->
 <div class="intro" data-intro hidden>
   <div class="intro__stage" data-intro-stage aria-hidden="true">
     <div class="intro__paper" data-intro-paper>
@@ -242,96 +242,38 @@
       </div>
     </div>
 
-    <!-- 打字机：磨砂玻璃分层，机器压在视口底边，纸从滚筒后面翻上来 -->
+    <!-- 打印机：磨砂亚克力机身，纸从顶部压条下出来，前口垂一条纸带 -->
     <div class="intro__machine" data-intro-machine aria-hidden="true">
-      <div class="m__body">
-        <svg class="m__keys" viewBox="0 0 400 126" preserveAspectRatio="none" focusable="false" aria-hidden="true">
-          <!-- 字锤的扇形 -->
-          <g class="m__typebars">
-            <line x1="149.0" y1="46" x2="102.0" y2="17" />
-            <line x1="156.3" y1="46" x2="116.0" y2="17" />
-            <line x1="163.6" y1="46" x2="130.0" y2="17" />
-            <line x1="170.9" y1="46" x2="144.0" y2="17" />
-            <line x1="178.2" y1="46" x2="158.0" y2="17" />
-            <line x1="185.4" y1="46" x2="172.0" y2="17" />
-            <line x1="192.7" y1="46" x2="186.0" y2="17" />
-            <line x1="200.0" y1="46" x2="200.0" y2="17" />
-            <line x1="207.3" y1="46" x2="214.0" y2="17" />
-            <line x1="214.6" y1="46" x2="228.0" y2="17" />
-            <line x1="221.8" y1="46" x2="242.0" y2="17" />
-            <line x1="229.1" y1="46" x2="256.0" y2="17" />
-            <line x1="236.4" y1="46" x2="270.0" y2="17" />
-            <line x1="243.7" y1="46" x2="284.0" y2="17" />
-            <line x1="251.0" y1="46" x2="298.0" y2="17" />
-          </g>
-          <!-- 色带盘 -->
-          <g class="m__spools">
-            <circle cx="62" cy="30" r="17" />
-            <circle cx="338" cy="30" r="17" />
-            <circle cx="62" cy="30" r="5" class="m__spool-hub" />
-            <circle cx="338" cy="30" r="5" class="m__spool-hub" />
-          </g>
-          <!-- 键 -->
-          <g class="m__keyrow">
-            <circle cx="105.0" cy="56" r="5.6" />
-            <circle cx="124.0" cy="56" r="5.6" />
-            <circle cx="143.0" cy="56" r="5.6" />
-            <circle cx="162.0" cy="56" r="5.6" />
-            <circle cx="181.0" cy="56" r="5.6" />
-            <circle cx="200.0" cy="56" r="5.6" />
-            <circle cx="219.0" cy="56" r="5.6" />
-            <circle cx="238.0" cy="56" r="5.6" />
-            <circle cx="257.0" cy="56" r="5.6" />
-            <circle cx="276.0" cy="56" r="5.6" />
-            <circle cx="295.0" cy="56" r="5.6" />
-          </g>
-          <g class="m__keyrow">
-            <circle cx="92.0" cy="76" r="6.0" />
-            <circle cx="111.6" cy="76" r="6.0" />
-            <circle cx="131.3" cy="76" r="6.0" />
-            <circle cx="150.9" cy="76" r="6.0" />
-            <circle cx="170.5" cy="76" r="6.0" />
-            <circle cx="190.2" cy="76" r="6.0" />
-            <circle cx="209.8" cy="76" r="6.0" />
-            <circle cx="229.5" cy="76" r="6.0" />
-            <circle cx="249.1" cy="76" r="6.0" />
-            <circle cx="268.7" cy="76" r="6.0" />
-            <circle cx="288.4" cy="76" r="6.0" />
-            <circle cx="308.0" cy="76" r="6.0" />
-          </g>
-          <g class="m__keyrow">
-            <circle cx="82.0" cy="96" r="6.4" />
-            <circle cx="103.5" cy="96" r="6.4" />
-            <circle cx="124.9" cy="96" r="6.4" />
-            <circle cx="146.4" cy="96" r="6.4" />
-            <circle cx="167.8" cy="96" r="6.4" />
-            <circle cx="189.3" cy="96" r="6.4" />
-            <circle cx="210.7" cy="96" r="6.4" />
-            <circle cx="232.2" cy="96" r="6.4" />
-            <circle cx="253.6" cy="96" r="6.4" />
-            <circle cx="275.1" cy="96" r="6.4" />
-            <circle cx="296.5" cy="96" r="6.4" />
-            <circle cx="318.0" cy="96" r="6.4" />
-          </g>
-          <g class="m__keyrow">
-            <circle cx="68.0" cy="116" r="6.8" />
-            <circle cx="97.3" cy="116" r="6.8" />
-            <circle cx="126.7" cy="116" r="6.8" />
-            <circle cx="156.0" cy="116" r="6.8" />
-            <circle cx="185.3" cy="116" r="6.8" />
-            <circle cx="214.7" cy="116" r="6.8" />
-            <circle cx="244.0" cy="116" r="6.8" />
-            <circle cx="273.3" cy="116" r="6.8" />
-            <circle cx="302.7" cy="116" r="6.8" />
-            <circle cx="332.0" cy="116" r="6.8" />
-          </g>
-        </svg>
+      <div class="d__case">
+        <span class="d__flare d__flare--1"></span>
+        <span class="d__flare d__flare--2"></span>
+        <span class="d__flare d__flare--3"></span>
+        <span class="d__flare d__flare--4"></span>
+        <span class="d__flare d__flare--5"></span>
+
+        <!-- 顶部出纸口 -->
+        <div class="d__bar"></div>
+        <div class="d__face">
+          <span class="d__grille"></span>
+        </div>
+
+        <!-- 中段 -->
+        <div class="d__band"><span class="d__rule"></span></div>
+
+        <!-- 下部机身 -->
+        <div class="d__skirt"></div>
+
+        <!-- 前口垂下来的纸带（下端被屏幕裁掉） -->
+        <div class="d__tail"></div>
+
+        <!-- 前出纸口的裁切条 -->
+        <div class="d__exit"></div>
+
+        <span class="d__screw d__screw--1"></span>
+        <span class="d__screw d__screw--2"></span>
+        <span class="d__screw d__screw--3"></span>
+        <span class="d__screw d__screw--4"></span>
       </div>
-      <div class="m__deck"></div>
-      <div class="m__roller"></div>
-      <span class="m__knob m__knob--l"></span>
-      <span class="m__knob m__knob--r"></span>
-      <div class="m__bail"><span class="m__bail-roll"></span><span class="m__bail-roll"></span></div>
     </div>
   </div>
 
@@ -343,7 +285,7 @@
 <script src="/vinyl/projects.js" defer></script>
 <script src="/vinyl/stage.js?v=6" defer></script>
 <script src="/main.js?v=2" defer></script>
-<script src="/intro.js?v=5" defer></script>
+<script src="/intro.js?v=7" defer></script>
 
 <img class="avatar-badge" src="/assets/images/avatar-badge.png" alt="" aria-hidden="true" width="256" height="256" />
 </body>
