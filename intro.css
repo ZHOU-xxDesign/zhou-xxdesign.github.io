@@ -200,6 +200,15 @@
   fill: url(#tw-key);
   stroke: #8aa3ba;
   stroke-width: 0.9;
+  /* 按下的动作由 intro.js 逐帧写 transform */
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+/* 按到底时压暗一点，像真的吃上了力 */
+.tw__keys circle.is-down {
+  fill: #b3cbe0;
+  stroke: #7894ad;
 }
 
 /* ---------- 跳过 ------------------------------------------------------ */

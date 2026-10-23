@@ -80,6 +80,19 @@
     return { node, at: step.at, li: step.li, shown: false };
   });
 
+  /* 键帽：每打一个字，随机（但固定）按下一颗，跟着打字一起动 */
+  const keys = Array.from(el.querySelectorAll(".tw__keys circle"));
+  const presses = keys.length
+    ? steps.map((step, i) => {
+        const code = LINES[step.li].text[step.i].charCodeAt(0);
+        return {
+          at: step.at - 30,                       // 键先按下，字再落纸
+          node: keys[(code * 37 + i * 11) % keys.length],
+          amt: 0,
+        };
+      })
+    : [];
+
   const carets = lineEls.map((line) => {
     const c = document.createElement("span");
     c.className = "intro__caret";
@@ -177,6 +190,24 @@
           ` rotate(${(parseFloat(c.node.dataset.rot) * (1 - e)).toFixed(2)}deg)`;
       }
       activeLine = c.li;
+    }
+
+    /* 2.5 键帽：按下 → 停一下 → 弹回 */
+    for (let i = 0; i < presses.length; i++) {
+      const p = presses[i];
+      const d = t - p.at;
+      let amt = 0;
+      if (d >= 0 && d < 150) {
+        const q = d / 150;
+        amt = q < 0.3 ? q / 0.3 : q < 0.62 ? 1 : (1 - (q - 0.62) / 0.38);
+      }
+      if (amt !== p.amt) {
+        p.amt = amt;
+        p.node.style.transform = amt
+          ? `translateY(${(amt * 2.8).toFixed(2)}px) scale(${(1 - amt * 0.06).toFixed(3)})`
+          : "";
+        p.node.classList.toggle("is-down", amt > 0.55);
+      }
     }
 
     /* 3. 光标：打字时常亮，打完开始闪 */
