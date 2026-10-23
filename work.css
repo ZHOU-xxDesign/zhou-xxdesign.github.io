@@ -274,6 +274,45 @@
 /* 图组与图之间统一间距 */
 .case__figures { display: grid; gap: clamp(2.5rem, 5vw, 4rem); }
 
+/* 动效三连：素材 350×210 黑底 GIF，三列并排时接近 1x，避免被放大 */
+.case__motion {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  /* 不铺黑底：GIF 本身就是黑底，再垫一层黑会把栅格间距吞掉，
+     九支排成 3×3 时会糊成一整片。留白由页面白底来当缝隙。 */
+  padding: 0;
+  background: none;
+}
+.case__motion figure { margin: 0; }
+.case__motion img { display: block; width: 100%; height: auto; }
+.case__motion figcaption {
+  margin-top: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  color: var(--gray-500);
+}
+@media (min-width: 640px) {
+  .case__motion { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* 两格的情况：不要空出第三列 */
+@media (min-width: 640px) {
+  .case__motion--pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* 尺寸不一的动效素材：统一成 5:3 的黑格，图按比例居中（黑底上留边看不出来） */
+.case__motion--mixed img {
+  aspect-ratio: 5 / 3;
+  object-fit: contain;
+  background: var(--black);
+}
+
+/* 三支比例差别更大时用方形格子（文字类动效才有足够尺寸） */
+.case__motion--square img {
+  aspect-ratio: 1 / 1;
+}
+
 /* ---------- 下一个项目 ----------------------------------------------- */
 
 .case__next {

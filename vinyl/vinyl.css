@@ -1,0 +1,256 @@
+/* ==========================================================================
+   vinyl cover —— 参考录屏里那支动效：
+   项目首图当黑胶唱片的封套（正方形），hover 时黑胶从封套上方滑出来，
+   同时封套下方的作品名药丸浮现。
+
+   几何全部量自参考录屏（900×651 抽帧，封套宽 S ≈ 342px）：
+     封套        正方形，S
+     唱片直径     243 / 342 = 0.710 S
+     滑出行程     129 / 342 = 0.377 S（滑出后露出唱片的 53%）
+     唱片静置    完全藏在封套后（上沿与封套上沿齐平）
+     药丸        距封套底 0.032 S，高 0.076 S，字号 0.038 S
+     底色        #EDEEED（实测 237,238,237）
+
+   动效也量过：滑出约 230ms 到位、带约 1.6% 过冲然后回落。
+   弹簧参数 k=0.12 / d=0.625 是按实测曲线拟合出来的（见 README）。
+
+   尺寸策略：整套用容器查询单位 cqw，S = 100cqw。
+   ========================================================================== */
+
+.vc {
+  --vc-bg: #edeede;
+  --vc-ink: #141414;
+
+  /* 几何比例，全部以封套宽 S 为单位（S = 100cqw） */
+  --vc-disc-d: 71cqw;        /* 唱片直径 */
+  --vc-disc-travel: 37cqw;   /* 滑出行程（滑出后露出唱片的 52%） */
+  --vc-radius: 4cqw;         /* 封套圆角 */
+  --vc-gap: 3.2cqw;          /* 封套到药丸的距离 */
+  --vc-pill-h: 7.6cqw;       /* 药丸高度 */
+  --vc-pill-fs: 3.4cqw;      /* 药丸字号 */
+
+  container-type: inline-size;
+  position: relative;
+  display: block;
+}
+
+.vc__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- 舞台：封套 + 唱片 ---------- */
+
+.vc__stage {
+  position: relative;
+  width: 100%;
+  /* 正方形封套 */
+  aspect-ratio: 1 / 1;
+  /* 唱片从上方伸出来，这里不能裁 */
+  overflow: visible;
+  isolation: isolate;
+  /* 给唱片预留上探空间。×1.06 是弹簧过冲的余量（实测过冲约 1.04 倍）。
+     必须写在 .vc__stage 上而不是 .vc 上：cqw 不能用在自己身上——
+     元素设了 container-type 之后，它**自身**的属性仍然要往上找容器，
+     找不到就退回视口宽度（这个坑踩过，详见 README）。
+     放在这里的好处是：卡片高度已经包含唱片伸出去的那部分，
+     放进任何栅格都不会压到上一行，不需要为它调 row-gap。 */
+  margin-top: calc(var(--vc-disc-travel) * 1.06);
+}
+
+/* 唱片：藏在封套后面，靠 --vc-out（0..1）向上位移 */
+.vc__disc {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: var(--vc-disc-d);
+  height: var(--vc-disc-d);
+  margin-left: calc(var(--vc-disc-d) / -2);
+  border-radius: 50%;
+  z-index: 1;
+
+  /* 静置时唱片上沿与封套上沿齐平，整张藏在封套后面；
+     --vc-out 从 0 到 1，唱片向上滑出 0.37S */
+  transform: translate3d(0, calc(var(--vc-out, 0) * var(--vc-disc-travel) * -1), 0);
+  will-change: transform;
+
+  /* 黑胶本体。真实唱片在灯下会有两条相对的弧形反光带（反射的是环境），
+     只有一层柔光是不够的——那看起来像一块黑纸板而不是唱片 */
+  background:
+    radial-gradient(76% 44% at 32% 15%, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0) 66%),
+    radial-gradient(54% 32% at 76% 30%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 70%),
+    radial-gradient(64% 36% at 50% 90%, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 50%, #181818 0%, #0d0d0d 58%, #070707 100%);
+  box-shadow:
+    0 0.5cqw 1.4cqw rgba(0, 0, 0, 0.3),
+    inset 0 0 0 0.14cqw rgba(255, 255, 255, 0.07);
+}
+
+/* 纹路：同心圆，很淡，只在近看时能感觉到"这是一张唱片"。
+   间距别调太小：0.45cqw 时一张 414px 的卡片上有 158 圈，
+   光栅化会明显变重（实测能让内置预览截图超时）。
+   1.6cqw 约 45 圈，视觉上一样是"唱片"，代价小得多，也少摩尔纹。 */
+.vc__disc::before {
+  content: "";
+  position: absolute;
+  inset: 3%;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.035) 0 0.8cqw,
+    rgba(0, 0, 0, 0) 0.8cqw 1.6cqw
+  );
+  opacity: 0.34;
+}
+
+/* 静止态（唱片完全藏在封套后）直接不渲染唱片：
+   首页默认就是这个状态，省掉每张卡片的圆盘 + 高光 + 纹路 + 阴影的光栅化。
+   JS 在 --vc-out 从 0 抬起时会立刻摘掉这个类。 */
+.vc__disc.is-off { visibility: hidden; }
+
+/* 中心标签：项目首图裁成圆，像真唱片的片芯 */
+.vc__label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  height: 40%;
+  margin: -20% 0 0 -20%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #1b1b1b;
+  box-shadow:
+    inset 0 0 0 0.15cqw rgba(255, 255, 255, 0.09),
+    0 0.2cqw 0.6cqw rgba(0, 0, 0, 0.4);
+}
+
+.vc__label img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* 稍微压暗，别让片芯比封套还跳 */
+  filter: brightness(0.72) saturate(0.88);
+}
+
+/* 主轴孔 */
+.vc__hole {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3.2%;
+  height: 3.2%;
+  margin: -1.6% 0 0 -1.6%;
+  border-radius: 50%;
+  background: #e9eae9;
+  box-shadow: inset 0 0 0 0.1cqw rgba(0, 0, 0, 0.35);
+}
+
+/* 封套：盖住唱片的下半部分。z-index 高于唱片，所以唱片是从它"后面"出来的 */
+.vc__sleeve {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: var(--vc-radius);
+  overflow: hidden;
+  background: #d8d9d8;
+  box-shadow:
+    0 0.6cqw 2cqw rgba(0, 0, 0, 0.13),
+    0 0.1cqw 0.4cqw rgba(0, 0, 0, 0.1);
+}
+
+.vc__sleeve img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 唱片滑出后，在封套上沿投下一道影——不然黑胶贴着深色封套时边界会糊在一起。
+   影子的浓度跟着 --vc-out 走，收回时自动消失 */
+.vc__sleeve::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 15%;
+  pointer-events: none;
+  z-index: 1;
+  /* 用椭圆径向渐变而不是线性渐变：影子要收在唱片宽度内、往两侧散开，
+     线性渐变会变成横贯封套的一条脏带子 */
+  background: radial-gradient(58% 92% at 50% 0%, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 74%);
+  opacity: var(--vc-out, 0);
+}
+
+/* 封套边缘一圈极细的高光，纸板的手感 */
+.vc__sleeve::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 0.1cqw rgba(255, 255, 255, 0.14);
+}
+
+/* ---------- 作品名药丸 ---------- */
+
+.vc__name {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--vc-gap);
+  /* 出现时轻轻上浮一点 */
+  opacity: var(--vc-name, 0);
+  transform: translate3d(0, calc((1 - var(--vc-name, 0)) * 1.2cqw), 0);
+  will-change: opacity, transform;
+}
+
+.vc__pill {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  height: var(--vc-pill-h);
+  padding: 0 1.6cqw;
+  border-radius: calc(var(--vc-pill-h) / 2.6);
+  background: var(--vc-ink);
+  color: #fff;
+  font-family: var(--vc-font, "Inter", -apple-system, "PingFang SC", sans-serif);
+  font-size: var(--vc-pill-fs);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 0.3cqw 1cqw rgba(0, 0, 0, 0.16);
+}
+
+/* 键盘聚焦时也要能看到名字 */
+.vc__link:focus-visible {
+  outline: 2px solid var(--vc-ink);
+  outline-offset: 0.8cqw;
+  border-radius: var(--vc-radius);
+}
+
+/* ---------- 可选：整墙栅格 ----------
+   卡片自己已经预留了唱片的上探空间，所以这里只管视觉间距，不用为唱片调 row-gap */
+
+.vinyl-wall {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 1.5rem;
+  row-gap: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  .vinyl-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .vinyl-wall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 2.5rem;
+    row-gap: 4rem;
+  }
+}

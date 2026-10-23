@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Magic Design System 1.0 | 周晓旭</title>
-<meta name="description" content="从全局属性到组件库的完整设计系统：色彩、字体、间距、圆角、阴影规范，32px 图标栅格，通用组件与机器人表情延展。" />
+<meta name="description" content="从全局属性到组件库的完整设计系统：色彩、字体、间距、圆角、阴影规范，32px 图标栅格与通用组件。" />
 
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Magic Design System 1.0" />
@@ -17,8 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/styles.css" />
-<link rel="stylesheet" href="/work.css" />
+<link rel="stylesheet" href="/styles.css?v=4" />
+<link rel="stylesheet" href="/work.css?v=7" />
 </head>
 
 <body>
@@ -63,7 +63,7 @@
       <div class="case__body">
         <p>
           整套系统分三层推进：最底层是<strong>全局属性</strong>（不可再拆的最小单元），
-          中间是<strong>素材库</strong>（图标与插画），最上层是<strong>通用组件</strong>与机器人表情延展。
+          中间是<strong>素材库</strong>（图标与插画），最上层是<strong>通用组件</strong>。
           上层只引用下层的变量，改一处全局生效。
         </p>
       </div>
@@ -164,42 +164,6 @@
       </figure>
     </div>
 
-    <!-- ===================== 机器人表情 ===================== -->
-    <section class="case__section">
-      <p class="case__section-label">04<span>表情延展</span></p>
-      <div class="case__body">
-        <p class="case__quote">让机器有表情，交互才有温度。</p>
-        <p>
-          Design Extension 部分把设计系统延伸到硬件本身——为不同机型设计机器人面部表情。
-          难点在于每种机型的屏幕形态完全不同，不能用同一套素材硬套。
-        </p>
-        <div class="case__points case__points--3">
-          <article class="case__point">
-            <span class="case__point-num">通用 · A2</span>
-            <h4>在基本型上做变化</h4>
-            <p>延伸的表情都保留共有元素，视觉上维持统一效果，靠眼部形态与弧度区分情绪。</p>
-          </article>
-          <article class="case__point">
-            <span class="case__point-num">灵犀 · X2</span>
-            <h4>用光球颜色表达情绪</h4>
-            <p>面部屏幕尺寸较小，可将整个面部设计进去，但削弱了立体的温度；情绪通过面部光球颜色的变化做对应调整。</p>
-          </article>
-          <article class="case__point">
-            <span class="case__point-num">精灵 · G2</span>
-            <h4>用光环表达状态</h4>
-            <p>以环形光效承载「I am listening」这类状态反馈，不占用显示区域。</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <div class="case__figures">
-      <figure class="case__figure">
-        <img src="/assets/images/work/design-system-05.jpg" alt="机器人表情设计：通用 A2、灵犀 X2、精灵 G2" loading="lazy" width="1600" height="4120" />
-        <figcaption><b>Fig. 04</b> Robot Expression — 三代机型表情延展</figcaption>
-      </figure>
-    </div>
-
     <a class="case__next" href="/work/agibot/">
       <span class="case__next-label">Next project</span>
       <span class="case__next-title">智元机器人 · AgiBot App</span>
@@ -216,6 +180,8 @@
   </div>
 </main>
 
-<script src="/main.js" defer></script>
+<script src="/main.js?v=2" defer></script>
+
+<img class="avatar-badge" src="/assets/images/avatar-badge.png" alt="" aria-hidden="true" width="256" height="256" />
 </body>
 </html>

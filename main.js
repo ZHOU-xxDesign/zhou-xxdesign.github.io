@@ -1,7 +1,8 @@
 /* ==========================================================================
    周晓旭 · Portfolio — main.js
    1. 页脚年份
-   2. 作品卡片滚动渐入（带保险回退）
+   2. 邮箱：一次点击同时「打开邮件客户端 + 复制地址」
+   3. 作品卡片滚动渐入（带保险回退；现在首页没有 .card，这段会自动跳过）
    ========================================================================== */
 
 (() => {
@@ -11,7 +12,58 @@
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  /* ---------- 2. 滚动渐入 --------------------------------------------- */
+  /* ---------- 2. 邮箱：跳转 + 复制 ------------------------------------- */
+  /* 点击不阻止默认行为：mailto 照常唤起邮件客户端，同时把地址写进剪贴板，
+     并给一句「已复制」的反馈。剪贴板 API 需要安全上下文（https / localhost），
+     拿不到就退回 execCommand。 */
+  const mailEl = document.querySelector(".contact__mail");
+  const copiedEl = document.querySelector("[data-copied]");
+
+  function legacyCopy(text) {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "-2000px";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard
+        .writeText(text)
+        .then(() => true)
+        .catch(() => legacyCopy(text));
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+
+  if (mailEl && copiedEl) {
+    const addr = (mailEl.getAttribute("data-mail") ||
+      mailEl.getAttribute("href").replace(/^mailto:/i, "")).trim();
+    let hintTimer;
+
+    mailEl.addEventListener("click", () => {
+      copyText(addr).then((ok) => {
+        copiedEl.textContent = ok ? "已复制 " + addr : "复制失败，请手动选择";
+        copiedEl.classList.toggle("is-failed", !ok);
+        copiedEl.classList.add("is-on");
+        clearTimeout(hintTimer);
+        hintTimer = setTimeout(() => copiedEl.classList.remove("is-on"), 2000);
+      });
+    });
+  }
+
+  /* ---------- 3. 滚动渐入 --------------------------------------------- */
   const cards = document.querySelectorAll(".card");
   if (!cards.length) return;
 

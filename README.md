@@ -24,7 +24,11 @@ python3 -m http.server 8000
 ├── index.html          # 首页 —— Hero / 作品 / 关于 / 经历 / 联系
 ├── styles.css          # 首页样式（含设计变量、响应式、动画）
 ├── work.css            # 项目详情页样式（依赖 styles.css 的变量）
-├── main.js             # 两个小交互：页脚年份、卡片滚动渐入
+├── main.js             # 页脚年份、邮箱点击复制、卡片滚动渐入（已无 .card，自动跳过）
+├── vinyl/              # 作品台组件
+│   ├── stage.css / stage.js   一屏一个项目、唱片抽出、圆点切换
+│   ├── projects.js            项目数据（accent / meta / href）
+│   └── assets/sleeve/         1:1 封套素材
 ├── work/               # 6 个项目详情页
 │   ├── magiclab/index.html
 │   ├── design-system/index.html
@@ -75,7 +79,7 @@ python3 -m http.server 8000
 | 主标题 | Caveat 手写体，斜切 `skewX(-6deg)`，配闪烁光标 |
 | 小标签 | Space Mono 等宽大写，字距 `0.3em`–`0.4em` |
 | 正文 | Inter |
-| 项目图 | 宽屏默认灰度，悬停转彩色并浮出元信息 |
+| 作品区 | 一屏一个项目：黑胶封套 + 唱片（hover 抽出 62%），下方颜色圆点切换 |
 | 分隔 | 1px 细线，`#f3f4f6` |
 
 三个字体族定义在 `styles.css` 顶部的 `--font-hand` / `--font-body` / `--font-mono`。
@@ -86,16 +90,29 @@ python3 -m http.server 8000
 全部在 `index.html` 里，按区块从上到下排列：Hero → 作品 → 关于 → 经历 → 联系。
 
 ### 加一个作品
-在 `index.html` 里复制任意一个 `<article class="card">` 整块，改四处：
+作品区不是卡片列表，是「作品台」：一屏一个项目，靠下方颜色圆点切换。所以加作品只改**一个文件**：
 
-1. `<a class="card__link" href="/work/<slug>/">` 指向新的详情页
-2. `<img src="...">` 换成新图（放进 `assets/images/`，建议宽 1600px、JPG 质量 82）
-3. `<h2 class="card__title">` 改成项目名
-4. 两处元信息（`card__meta` 和 `card__meta-inline`）里的 Time / Project / Introduction 保持一致
+`vinyl/projects.js` 的 `projects` 数组末尾加一项：
 
-> `card__meta` 是宽屏悬停浮层，`card__meta-inline` 是窄屏静态展示——**两处都要改**，内容必须相同。
+```js
+{
+  index: "007",
+  slug: "new-project",              // 英文短名，决定素材文件名
+  title: "项目名",                   // 作品台标题 + 黑底药丸上的字
+  meta: "角色 / 方向 · 2026",        // 「角色 · 年份」那一行
+  accent: "#c2410c",                // 圆点颜色，要和已有六个拉开色相
+  href: "/work/new-project/",
+  alt: "无障碍描述",
+},
+```
+
+然后把正方形封套图放进 `vinyl/assets/sleeve/`，命名 `<index>-<slug>.jpg`（建议 1200×1200）。
+圆点数量、`(001 — 00N)` 区间、编号都是自动算的，不用改 HTML。
+
+> 更省事的做法：用 `../../motion/启动替换台.command` 起本地后台，顶部有「新增项目」表单，
+> 会写进 `projects.js` 并让你直接拖图。详见 `motion/README.md`。
 >
-> 加完记得把 `works__count` 的 `(001 — 006)` 改成新的编号范围。
+> 详情页仍要手动建：复制 `work/<slug>/index.html` 改内容，图片放 `assets/images/work/`。
 
 ### 改颜色 / 间距
 `styles.css` 顶部的 `:root` 变量块。改一处全局生效。

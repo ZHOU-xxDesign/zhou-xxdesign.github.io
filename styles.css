@@ -337,6 +337,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .grid { column-gap: 1.5rem; }
 }
 
+
 .card { display: flex; flex-direction: column; width: 100%; }
 
 /* 滚动渐入：只在 JS 可用且未开启「减弱动效」时生效，
@@ -665,6 +666,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 .contact__mail {
+  position: relative;
   display: block;
   font-family: var(--font-mono);
   font-weight: 700;
@@ -682,6 +684,37 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
      11.5vw 保证在 320px~1920px 都不会横向溢出 */
   font-size: clamp(1.5rem, 11.5vw, 12rem);
 }
+/* 点击后浮出的小提示：绝对定位，不挤动下面的 WeChat / Based in */
+.contact__copied {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translateY(0.55rem);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.contact__copied.is-on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contact__copied.is-failed { background: var(--gray-500); }
+
 .contact__mail-l1 { text-align: left; }
 .contact__mail-l2 { text-align: right; margin-top: -1vw; }
 
@@ -767,4 +800,33 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     transition-duration: 0.001ms !important;
   }
   .cursor { animation: none; opacity: 1; }
+}
+
+/* ---------- 右下角头像角标 ------------------------------------------- */
+
+/* 固定在视口右下角，所有页面都有。纯装饰：不接收点击，也不进无障碍树 */
+.avatar-badge {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 40;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow:
+    0 8px 20px -8px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 767px) {
+  .avatar-badge {
+    width: 44px;
+    height: 44px;
+    right: 14px;
+    bottom: 14px;
+    border-radius: 10px;
+  }
 }
