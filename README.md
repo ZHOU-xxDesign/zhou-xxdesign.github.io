@@ -49,7 +49,7 @@ python3 -m http.server 8000
 ## 首页开场
 
 首屏进入时播放一段约 6.6 秒的开场：淡蓝色打字机从画面底部升起，`hello.` 和 `i'm zoya.` 逐字打在纸上，
-纸随打字不断向上长；打完后整张纸放大到铺满视口，停留 1.2 秒，再淡出回到正常首屏。
+纸随打字不断向上长；打完后整张纸放大到铺满视口，停留 0.6 秒，再淡出回到正常首屏。
 
 - **只在首页**：`index.html` 里引 `intro.css` / `intro.js`，其它页面不带
 - **每个标签页只播一次**：播完写 `sessionStorage.intro = "1"`；系统开启「减弱动效」时不播
@@ -68,8 +68,8 @@ const LINES = [
 ];
 const T_START = 420;    // 打印机入场后开始打字
 const ZOOM_MS = 1050;   // 纸放大铺满的时长
-const HOLD_MS = 1200;   // 满屏停留
-const OUT_MS = 780;     // 淡出
+const HOLD_MS = 600;    // 满屏停留
+const OUT_MS = 400;     // 淡出
 ```
 
 > 所有运动都在 `requestAnimationFrame` 里逐帧写内联样式，**没有用 CSS transition**——
