@@ -90,6 +90,15 @@
 .intro.is-cover .intro__paper::before { opacity: 0; }
 
 
+/* 放大时压上来的一层白：纸色随放大慢慢褪白 */
+.intro__wash {
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ---------- 纸上的字 --------------------------------------------------- */
 
 .intro__body {

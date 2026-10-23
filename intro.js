@@ -27,6 +27,8 @@
   const paper = el.querySelector("[data-intro-paper]");
   const body = el.querySelector("[data-intro-body]");
   const machine = el.querySelector("[data-intro-machine]");
+  const wash = el.querySelector("[data-intro-wash]");
+  const head = el.querySelector(".intro__head");
   const skipBtn = el.querySelector("[data-intro-skip]");
   const lineEls = Array.from(el.querySelectorAll("[data-intro-line]"));
 
@@ -231,6 +233,9 @@
       paper.style.transform =
         `translate(${(zoom.tx * e).toFixed(2)}px, ${(zoom.ty * e).toFixed(2)}px) ` +
         `scale(${s.toFixed(4)})`;
+      // 纸色跟着放大一起褪白；信笺头先退场，免得被屏幕顶边切掉
+      if (wash) wash.style.opacity = e.toFixed(3);
+      if (head) head.style.opacity = (1 - clamp01(e / 0.35)).toFixed(3);
       const k = 1 + (zoom.k - 1) * e;
       body.style.transform =
         `translate(${(zoom.shift * e).toFixed(2)}px, ${(-zoom.lift * e).toFixed(2)}px)` +
