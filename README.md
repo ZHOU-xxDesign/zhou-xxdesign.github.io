@@ -25,7 +25,7 @@ python3 -m http.server 8000
 ├── styles.css          # 首页样式（含设计变量、响应式、动画）
 ├── work.css            # 项目详情页样式（依赖 styles.css 的变量）
 ├── main.js             # 页脚年份、邮箱点击复制、卡片滚动渐入（已无 .card，自动跳过）
-├── intro.css           # 首页开场：打印机
+├── intro.css           # 首页开场：打字机
 ├── intro.js            # 开场时间轴（rAF 逐帧驱动）
 ├── vinyl/              # 作品台组件
 │   ├── stage.css / stage.js   一屏一个项目、唱片抽出、圆点切换
@@ -48,7 +48,7 @@ python3 -m http.server 8000
 
 ## 首页开场
 
-首屏进入时播放一段约 6.6 秒的开场：打印机从画面底部升起，`hello.` 和 `i'm zoya.` 逐字打在纸上，
+首屏进入时播放一段约 6.6 秒的开场：淡蓝色打字机从画面底部升起，`hello.` 和 `i'm zoya.` 逐字打在纸上，
 纸随打字不断向上长；打完后整张纸放大到铺满视口，停留 2 秒，再淡出回到正常首屏。
 
 - **只在首页**：`index.html` 里引 `intro.css` / `intro.js`，其它页面不带

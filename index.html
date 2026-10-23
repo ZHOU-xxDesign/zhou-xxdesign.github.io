@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="/styles.css?v=6" />
 <link rel="stylesheet" href="/vinyl/vinyl.css?v=3" />
 <link rel="stylesheet" href="/vinyl/stage.css?v=14" />
-<link rel="stylesheet" href="/intro.css?v=7" />
+<link rel="stylesheet" href="/intro.css?v=9" />
 <script>
 /* 开场只在每个标签页第一次进入时播一次；尊重系统「减弱动效」。
    ?intro=1 强制播放，?intro=0 跳过，?introAt=3400 定格调试。 */
@@ -236,44 +236,191 @@
 <div class="intro" data-intro hidden>
   <div class="intro__stage" data-intro-stage aria-hidden="true">
     <div class="intro__paper" data-intro-paper>
+      <p class="intro__head">
+        <span>zhou xiaoxu</span>
+        <span>2026</span>
+      </p>
       <div class="intro__body" data-intro-body>
         <p class="intro__line intro__line--hello" data-intro-line></p>
         <p class="intro__line intro__line--sub" data-intro-line></p>
       </div>
     </div>
 
-    <!-- 打印机：磨砂亚克力机身，纸从顶部压条下出来，前口垂一条纸带 -->
+    <!-- 打字机：淡蓝机身、奶油色纸 -->
     <div class="intro__machine" data-intro-machine aria-hidden="true">
-      <div class="d__case">
-        <span class="d__flare d__flare--1"></span>
-        <span class="d__flare d__flare--2"></span>
-        <span class="d__flare d__flare--3"></span>
-        <span class="d__flare d__flare--4"></span>
-        <span class="d__flare d__flare--5"></span>
+      <svg class="tw" viewBox="0 0 400 248" focusable="false" aria-hidden="true">
+        <defs>
+          <linearGradient id="tw-shell" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#eaf2f9" />
+            <stop offset=".4" stop-color="#cddfec" />
+            <stop offset="1" stop-color="#a3bcd2" />
+          </linearGradient>
+          <linearGradient id="tw-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#e0ebf4" />
+            <stop offset=".6" stop-color="#c0d5e5" />
+            <stop offset="1" stop-color="#9db6cc" />
+          </linearGradient>
+          <linearGradient id="tw-key" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f6fbfe" />
+            <stop offset=".45" stop-color="#d3e4f0" />
+            <stop offset="1" stop-color="#a9c1d5" />
+          </linearGradient>
+          <linearGradient id="tw-bail" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fbfcfd" />
+            <stop offset=".35" stop-color="#c2c9d1" />
+            <stop offset="1" stop-color="#6f7881" />
+          </linearGradient>
+          <linearGradient id="tw-throat" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#39424a" />
+            <stop offset=".45" stop-color="#1d2328" />
+            <stop offset="1" stop-color="#0b0f12" />
+          </linearGradient>
+          <radialGradient id="tw-knob" cx=".38" cy=".3" r=".8">
+            <stop offset="0" stop-color="#eef6fc" />
+            <stop offset=".6" stop-color="#c3d7e6" />
+            <stop offset="1" stop-color="#8fa9c0" />
+          </radialGradient>
+        </defs>
 
-        <!-- 顶部出纸口 -->
-        <div class="d__bar"></div>
-        <div class="d__face">
-          <span class="d__grille"></span>
-        </div>
+        <!-- 机身外壳 -->
+        <path d="M2 248 L8 40 Q12 8 44 8 L356 8 Q388 8 392 40 L398 248 Z" fill="url(#tw-shell)" />
+        <path d="M8 40 Q12 8 44 8 L356 8 Q388 8 392 40 L393 56 L7 56 Z" fill="#edf5fb" opacity=".45" />
 
-        <!-- 中段 -->
-        <div class="d__band"><span class="d__rule"></span></div>
+        <!-- 字篮凹槽 -->
+        <path d="M46 8 H354 Q366 8 366 22 V50 Q366 62 352 62 H48 Q34 62 34 50 V22 Q34 8 46 8 Z" fill="url(#tw-throat)" />
+        <g class="tw__bars" stroke="#8b95a0" stroke-width="1.3" stroke-linecap="round" opacity=".38">
+          <line x1="80.0" y1="30" x2="134.0" y2="52" />
+          <line x1="88.6" y1="30" x2="138.7" y2="52" />
+          <line x1="97.1" y1="30" x2="143.4" y2="52" />
+          <line x1="105.7" y1="30" x2="148.1" y2="52" />
+          <line x1="114.3" y1="30" x2="152.9" y2="52" />
+          <line x1="122.9" y1="30" x2="157.6" y2="52" />
+          <line x1="131.4" y1="30" x2="162.3" y2="52" />
+          <line x1="140.0" y1="30" x2="167.0" y2="52" />
+          <line x1="148.6" y1="30" x2="171.7" y2="52" />
+          <line x1="157.1" y1="30" x2="176.4" y2="52" />
+          <line x1="165.7" y1="30" x2="181.1" y2="52" />
+          <line x1="174.3" y1="30" x2="185.9" y2="52" />
+          <line x1="182.9" y1="30" x2="190.6" y2="52" />
+          <line x1="191.4" y1="30" x2="195.3" y2="52" />
+          <line x1="200.0" y1="30" x2="200.0" y2="52" />
+          <line x1="208.6" y1="30" x2="204.7" y2="52" />
+          <line x1="217.1" y1="30" x2="209.4" y2="52" />
+          <line x1="225.7" y1="30" x2="214.1" y2="52" />
+          <line x1="234.3" y1="30" x2="218.9" y2="52" />
+          <line x1="242.9" y1="30" x2="223.6" y2="52" />
+          <line x1="251.4" y1="30" x2="228.3" y2="52" />
+          <line x1="260.0" y1="30" x2="233.0" y2="52" />
+          <line x1="268.6" y1="30" x2="237.7" y2="52" />
+          <line x1="277.1" y1="30" x2="242.4" y2="52" />
+          <line x1="285.7" y1="30" x2="247.1" y2="52" />
+          <line x1="294.3" y1="30" x2="251.9" y2="52" />
+          <line x1="302.9" y1="30" x2="256.6" y2="52" />
+          <line x1="311.4" y1="30" x2="261.3" y2="52" />
+          <line x1="320.0" y1="30" x2="266.0" y2="52" />
+        </g>
 
-        <!-- 下部机身 -->
-        <div class="d__skirt"></div>
+        <!-- 前脸 -->
+        <path d="M6 56 L394 56 L400 248 L0 248 Z" fill="url(#tw-front)" />
+        <path d="M6 56 L394 56 L394 63 L6 63 Z" fill="#f2f9fd" opacity=".8" />
 
-        <!-- 前口垂下来的纸带（下端被屏幕裁掉） -->
-        <div class="d__tail"></div>
+        <!-- 铭牌 -->
+        <rect x="168" y="70" width="64" height="14" rx="7" fill="#eaf3fa" stroke="#9db7ce" stroke-width="1" />
+        <rect x="181" y="75.5" width="38" height="3" rx="1.5" fill="#a8c1d6" />
 
-        <!-- 前出纸口的裁切条 -->
-        <div class="d__exit"></div>
+        <!-- 两端色带盘罩 -->
+        <rect x="18" y="38" width="64" height="29" rx="14.5" fill="url(#tw-front)" />
+        <rect x="318" y="38" width="64" height="29" rx="14.5" fill="url(#tw-front)" />
+        <rect x="49" y="49" width="12" height="6" rx="3" fill="#8fa9bf" opacity=".4" />
+        <rect x="339" y="49" width="12" height="6" rx="3" fill="#8fa9bf" opacity=".4" />
 
-        <span class="d__screw d__screw--1"></span>
-        <span class="d__screw d__screw--2"></span>
-        <span class="d__screw d__screw--3"></span>
-        <span class="d__screw d__screw--4"></span>
-      </div>
+        <!-- 键床 -->
+        <rect x="22" y="96" width="356" height="152" rx="16" fill="url(#tw-throat)" />
+          <g class="tw__keys">
+            <circle cx="102.0" cy="112.0" r="7.6" />
+            <circle cx="121.6" cy="112.7" r="7.6" />
+            <circle cx="141.2" cy="113.3" r="7.6" />
+            <circle cx="160.8" cy="113.7" r="7.6" />
+            <circle cx="180.4" cy="113.9" r="7.6" />
+            <circle cx="200.0" cy="114.0" r="7.6" />
+            <circle cx="219.6" cy="113.9" r="7.6" />
+            <circle cx="239.2" cy="113.7" r="7.6" />
+            <circle cx="258.8" cy="113.3" r="7.6" />
+            <circle cx="278.4" cy="112.7" r="7.6" />
+            <circle cx="298.0" cy="112.0" r="7.6" />
+          </g>
+          <g class="tw__keys">
+            <circle cx="88.0" cy="140.4" r="8.1" />
+            <circle cx="108.4" cy="141.3" r="8.1" />
+            <circle cx="128.7" cy="141.9" r="8.1" />
+            <circle cx="149.1" cy="142.5" r="8.1" />
+            <circle cx="169.5" cy="142.8" r="8.1" />
+            <circle cx="189.8" cy="143.0" r="8.1" />
+            <circle cx="210.2" cy="143.0" r="8.1" />
+            <circle cx="230.5" cy="142.8" r="8.1" />
+            <circle cx="250.9" cy="142.5" r="8.1" />
+            <circle cx="271.3" cy="141.9" r="8.1" />
+            <circle cx="291.6" cy="141.3" r="8.1" />
+            <circle cx="312.0" cy="140.4" r="8.1" />
+          </g>
+          <g class="tw__keys">
+            <circle cx="74.0" cy="168.7" r="8.6" />
+            <circle cx="96.9" cy="169.8" r="8.6" />
+            <circle cx="119.8" cy="170.7" r="8.6" />
+            <circle cx="142.7" cy="171.3" r="8.6" />
+            <circle cx="165.6" cy="171.8" r="8.6" />
+            <circle cx="188.5" cy="172.0" r="8.6" />
+            <circle cx="211.5" cy="172.0" r="8.6" />
+            <circle cx="234.4" cy="171.8" r="8.6" />
+            <circle cx="257.3" cy="171.3" r="8.6" />
+            <circle cx="280.2" cy="170.7" r="8.6" />
+            <circle cx="303.1" cy="169.8" r="8.6" />
+            <circle cx="326.0" cy="168.7" r="8.6" />
+          </g>
+          <g class="tw__keys">
+            <circle cx="60.0" cy="197.6" r="9.1" />
+            <circle cx="85.5" cy="198.7" r="9.1" />
+            <circle cx="110.9" cy="199.6" r="9.1" />
+            <circle cx="136.4" cy="200.3" r="9.1" />
+            <circle cx="161.8" cy="200.7" r="9.1" />
+            <circle cx="187.3" cy="201.0" r="9.1" />
+            <circle cx="212.7" cy="201.0" r="9.1" />
+            <circle cx="238.2" cy="200.7" r="9.1" />
+            <circle cx="263.6" cy="200.3" r="9.1" />
+            <circle cx="289.1" cy="199.6" r="9.1" />
+            <circle cx="314.5" cy="198.7" r="9.1" />
+            <circle cx="340.0" cy="197.6" r="9.1" />
+          </g>
+          <g class="tw__keys">
+            <circle cx="46.0" cy="225.9" r="9.3" />
+            <circle cx="74.0" cy="227.3" r="9.3" />
+            <circle cx="102.0" cy="228.3" r="9.3" />
+            <circle cx="130.0" cy="229.2" r="9.3" />
+            <circle cx="158.0" cy="229.7" r="9.3" />
+            <circle cx="186.0" cy="230.0" r="9.3" />
+            <circle cx="214.0" cy="230.0" r="9.3" />
+            <circle cx="242.0" cy="229.7" r="9.3" />
+            <circle cx="270.0" cy="229.2" r="9.3" />
+            <circle cx="298.0" cy="228.3" r="9.3" />
+            <circle cx="326.0" cy="227.3" r="9.3" />
+            <circle cx="354.0" cy="225.9" r="9.3" />
+          </g>
+
+        <!-- 压纸杆（压在纸前面） -->
+        <rect x="58" y="2.4" width="284" height="7" rx="3.5" fill="url(#tw-bail)" />
+        <rect x="122" y="0.6" width="16" height="11" rx="5" fill="url(#tw-bail)" />
+        <rect x="262" y="0.6" width="16" height="11" rx="5" fill="url(#tw-bail)" />
+
+        <!-- 两端旋钮 -->
+        <circle cx="20" cy="26" r="17" fill="url(#tw-knob)" />
+        <circle cx="380" cy="26" r="17" fill="url(#tw-knob)" />
+        <circle cx="20" cy="26" r="6.5" fill="#a9c1d5" opacity=".85" />
+        <circle cx="380" cy="26" r="6.5" fill="#a9c1d5" opacity=".85" />
+        <g stroke="#8aa4bb" stroke-width="1.1" opacity=".5">
+          <line x1="20" y1="11" x2="20" y2="41" />
+          <line x1="380" y1="11" x2="380" y2="41" />
+        </g>
+      </svg>
     </div>
   </div>
 
@@ -285,7 +432,7 @@
 <script src="/vinyl/projects.js" defer></script>
 <script src="/vinyl/stage.js?v=6" defer></script>
 <script src="/main.js?v=2" defer></script>
-<script src="/intro.js?v=7" defer></script>
+<script src="/intro.js?v=9" defer></script>
 
 <img class="avatar-badge" src="/assets/images/avatar-badge.png" alt="" aria-hidden="true" width="256" height="256" />
 </body>

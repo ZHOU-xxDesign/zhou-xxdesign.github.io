@@ -64,7 +64,8 @@
   overflow: hidden;
   border-radius: 2px 2px 0 0;
   background:
-    linear-gradient(180deg, #fbfaf7 0%, #fefdfb 42%, #ffffff 100%);
+    radial-gradient(120% 72% at 50% 0%, rgba(255, 255, 255, 0.55), transparent 62%),
+    linear-gradient(180deg, #f9f4e8 0%, #f5efe1 46%, #eee5d3 100%);
   box-shadow:
     0 -1px 0 rgba(0, 0, 0, 0.07),
     0 22px 56px -30px rgba(0, 0, 0, 0.45),
@@ -98,7 +99,23 @@
   width: max-content;
   /* 按满高算固定距离：纸往上长时这行字钉在原地（等于滚筒位置不动） */
   bottom: calc(var(--ph) * 0.14);
-  color: #111;
+  color: #1a160f;
+}
+
+/* 信笺头：左上 / 右上各一行小字，下面一道细线 */
+.intro__head {
+  position: absolute;
+  left: 11%;
+  right: 5%;
+  top: 4.4%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.55em;
+  border-bottom: 1px solid rgba(72, 56, 32, 0.28);
+  font-family: var(--font-mono);
+  font-size: calc(var(--pw) * 0.0255);
+  letter-spacing: 0.02em;
+  color: rgba(58, 45, 26, 0.66);
 }
 
 .intro__line {
@@ -154,7 +171,7 @@
   background: #111;
 }
 
-/* ---------- 打印机（磨砂亚克力） -------------------------------------- */
+/* ---------- 打字机（淡蓝机身） ---------------------------------------- */
 
 .intro__machine {
   position: absolute;
@@ -164,206 +181,26 @@
   width: var(--dw);
   height: var(--dh);
   margin-left: calc(var(--dw) / -2);
-  filter: drop-shadow(0 34px 24px rgba(20, 28, 44, 0.12));
+  filter: drop-shadow(0 22px 30px rgba(28, 44, 66, 0.16));
   will-change: transform, opacity;
 }
 
-/* 机壳：一整块半透明磨砂，圆角方盒 */
-.d__case {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  border-radius: calc(var(--dw) * 0.032);
-  background: linear-gradient(
-    180deg,
-    rgba(250, 251, 253, 0.66) 0%,
-    rgba(242, 244, 248, 0.82) 18%,
-    rgba(240, 242, 246, 0.86) 42%,
-    rgba(216, 221, 230, 0.92) 100%
-  );
-  -webkit-backdrop-filter: blur(14px) saturate(112%);
-  backdrop-filter: blur(14px) saturate(112%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.96),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
-    inset 0 -40px 60px -40px rgba(40, 55, 80, 0.18);
+.tw {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-/* 亚克力里透出来的彩色光斑 */
-.d__flare {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(24px);
-  opacity: 0.62;
+/* 键帽压一层薄影，才有厚度 */
+.tw__keys {
+  filter: drop-shadow(0 1px 1px rgba(16, 28, 44, 0.4));
 }
 
-.d__flare--1 {
-  left: -2%;
-  top: 2%;
-  width: 30%;
-  height: 40%;
-  background: radial-gradient(closest-side, #6cc9ff, transparent 70%);
+.tw__keys circle {
+  fill: url(#tw-key);
+  stroke: #8aa3ba;
+  stroke-width: 0.9;
 }
-
-.d__flare--2 {
-  right: -3%;
-  top: 8%;
-  width: 28%;
-  height: 34%;
-  background: radial-gradient(closest-side, #ffaee2, transparent 68%);
-}
-
-.d__flare--3 {
-  left: 16%;
-  top: 34%;
-  width: 26%;
-  height: 30%;
-  background: radial-gradient(closest-side, #ffe07a, transparent 70%);
-}
-
-.d__flare--4 {
-  right: 12%;
-  top: 30%;
-  width: 30%;
-  height: 34%;
-  background: radial-gradient(closest-side, #ffb073, transparent 70%);
-}
-
-.d__flare--5 {
-  left: 36%;
-  top: 46%;
-  width: 30%;
-  height: 26%;
-  background: radial-gradient(closest-side, #8fe2ff, transparent 72%);
-}
-
-/* 顶部出纸口的压条 */
-.d__bar {
-  position: absolute;
-  left: 13%;
-  right: 13%;
-  top: 1.1%;
-  height: 2.5%;
-  border-radius: 3px;
-  background:
-    repeating-linear-gradient(90deg, rgba(86, 98, 116, 0.45) 0 1px, transparent 1px 4px),
-    linear-gradient(180deg, #ffffff, #d7dce4);
-  box-shadow:
-    inset 0 1px 0 #ffffff,
-    0 2px 4px rgba(20, 30, 50, 0.16);
-}
-
-/* 上台面：一块浅浅凹进去的板 */
-.d__face {
-  position: absolute;
-  left: 7%;
-  right: 7%;
-  top: 4.6%;
-  height: 22%;
-  border-radius: calc(var(--dw) * 0.014);
-  background: linear-gradient(180deg, rgba(228, 233, 240, 0.5), rgba(250, 251, 253, 0.2));
-  box-shadow:
-    inset 0 4px 12px rgba(50, 70, 100, 0.16),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.8),
-    0 1px 0 rgba(255, 255, 255, 0.75);
-}
-
-/* 台面下沿的细齿条 */
-.d__grille {
-  position: absolute;
-  left: 5%;
-  right: 5%;
-  bottom: 10%;
-  height: 12%;
-  background:
-    repeating-linear-gradient(90deg, rgba(88, 101, 120, 0.42) 0 1px, transparent 1px 3px);
-  opacity: 0.5;
-}
-
-/* 中段 */
-.d__band {
-  position: absolute;
-  left: 3%;
-  right: 3%;
-  top: 29%;
-  height: 23%;
-  border-top: 1px solid rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid rgba(120, 136, 160, 0.14);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(240, 243, 247, 0.16));
-}
-
-/* 中段那道黑色窄槽 */
-.d__rule {
-  position: absolute;
-  left: 14%;
-  right: 14%;
-  top: 56%;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(22, 28, 38, 0.52);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3);
-}
-
-/* 下部机身 */
-.d__skirt {
-  position: absolute;
-  left: 2%;
-  right: 2%;
-  top: 53%;
-  bottom: 0;
-  border-radius: 0 0 calc(var(--dw) * 0.03) calc(var(--dw) * 0.03);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(232, 236, 242, 0.72));
-  box-shadow:
-    inset 0 3px 10px rgba(50, 70, 100, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 -1px 0 rgba(110, 126, 150, 0.1);
-}
-
-/* 前口垂下来的纸带 */
-.d__tail {
-  position: absolute;
-  left: 33%;
-  width: 34%;
-  top: 54.2%;
-  bottom: 0;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.035) 0%, transparent 12%, transparent 88%, rgba(0, 0, 0, 0.03) 100%),
-    linear-gradient(180deg, #ffffff 0%, #fdfcf9 55%, #f5f3ef 100%);
-  box-shadow:
-    0 14px 28px -14px rgba(20, 30, 50, 0.32),
-    0 0 0 1px rgba(0, 0, 0, 0.035);
-}
-
-/* 前出纸口的裁切条，压在纸带上沿 */
-.d__exit {
-  position: absolute;
-  left: 4%;
-  right: 4%;
-  top: 52%;
-  height: 4.4%;
-  border-radius: 3px;
-  background:
-    repeating-linear-gradient(90deg, rgba(96, 108, 126, 0.36) 0 1px, transparent 1px 4px),
-    linear-gradient(180deg, #ffffff, #e1e5eb);
-  box-shadow:
-    inset 0 1px 0 #ffffff,
-    0 2px 4px rgba(20, 30, 50, 0.12);
-}
-
-/* 机壳上的小螺丝 */
-.d__screw {
-  position: absolute;
-  width: 0.72%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: rgba(72, 82, 98, 0.4);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.55);
-}
-
-.d__screw--1 { left: 9%; top: 30%; }
-.d__screw--2 { right: 9%; top: 30%; }
-.d__screw--3 { left: 9%; top: 50%; }
-.d__screw--4 { right: 9%; top: 50%; }
 
 /* ---------- 跳过 ------------------------------------------------------ */
 

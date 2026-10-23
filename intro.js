@@ -43,7 +43,7 @@
   const ZOOM_MS = 1050;
   const HOLD_MS = 2000;
   const OUT_MS = 780;
-  const H0 = 0.57;          // 纸的起始高度（占满高比例）
+  const H0 = 0.62;          // 纸的起始高度（占满高比例）
 
   /* 逐字的时刻表 */
   const steps = [];
