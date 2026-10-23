@@ -23,6 +23,32 @@
 <link rel="stylesheet" href="/styles.css?v=6" />
 <link rel="stylesheet" href="/vinyl/vinyl.css?v=3" />
 <link rel="stylesheet" href="/vinyl/stage.css?v=14" />
+<link rel="stylesheet" href="/intro.css?v=2" />
+<script>
+/* 开场只在每个标签页第一次进入时播一次；尊重系统「减弱动效」。
+   ?intro=1 强制播放，?intro=0 跳过，?introAt=3400 定格调试。 */
+(function () {
+  var h = document.documentElement;
+  var q = new URLSearchParams(location.search);
+  var force = q.get("intro");
+  var seen = false;
+  try { seen = sessionStorage.getItem("intro") === "1"; } catch (e) {}
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var run = !seen && !reduce && !location.hash;
+  if (force === "1") run = true;
+  if (force === "0") run = false;
+  if (q.get("introAt") !== null) run = true;
+  if (!run) return;
+  h.classList.add("is-intro");
+  /* 兜底：intro.js 万一没跑起来，11s 后也要把首屏放出来 */
+  setTimeout(function () {
+    if (!h.classList.contains("is-intro")) return;
+    h.classList.remove("is-intro");
+    var ov = document.querySelector("[data-intro]");
+    if (ov) ov.hidden = true;
+  }, 11000);
+})();
+</script>
 <script>document.documentElement.classList.add("js");</script>
 </head>
 
@@ -206,9 +232,97 @@
   </footer>
 </main>
 
+<!-- ===================== 开场：打字机 ===================== -->
+<div class="intro" data-intro hidden>
+  <div class="intro__stage" data-intro-stage aria-hidden="true">
+    <div class="intro__paper" data-intro-paper>
+      <div class="intro__body" data-intro-body>
+        <p class="intro__line intro__line--hello" data-intro-line></p>
+        <p class="intro__line intro__line--sub" data-intro-line></p>
+      </div>
+    </div>
+
+    <!-- 打字机：只露出滚筒和一截机身，纸从滚筒后面翻上来 -->
+    <div class="intro__machine" data-intro-machine>
+      <svg viewBox="0 0 400 210" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="intro-body" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1b1b1b" />
+            <stop offset=".42" stop-color="#111111" />
+            <stop offset="1" stop-color="#070707" />
+          </linearGradient>
+        </defs>
+
+        <!-- 压纸杆 -->
+        <g fill="#0b0b0b">
+          <rect x="70" y="30" width="260" height="7" rx="3.5" />
+          <circle cx="116" cy="33" r="6.6" />
+          <circle cx="284" cy="33" r="6.6" />
+        </g>
+
+        <!-- 滚筒 -->
+        <rect x="38" y="46" width="324" height="38" rx="19" fill="#141414" />
+        <rect x="52" y="52" width="296" height="4" rx="2" fill="#4a4a4a" opacity=".65" />
+        <rect x="52" y="76" width="296" height="3" rx="1.5" fill="#000" opacity=".55" />
+
+        <!-- 两端旋钮 -->
+        <circle cx="38" cy="65" r="21" fill="#1b1b1b" />
+        <circle cx="362" cy="65" r="21" fill="#1b1b1b" />
+        <circle cx="38" cy="65" r="7" fill="#050505" />
+        <circle cx="362" cy="65" r="7" fill="#050505" />
+
+        <!-- 机身 -->
+        <path d="M16 210 L42 100 Q45 84 60 84 H340 Q355 84 358 100 L384 210 Z" fill="url(#intro-body)" />
+
+        <!-- 纸台前沿 -->
+        <path d="M60 84 H340 Q353 84 356 96 L359 106 H41 L44 96 Q47 84 60 84 Z" fill="#202020" />
+        <path d="M47 100 H353" stroke="#000" stroke-width="2" opacity=".5" />
+
+        <!-- 键 -->
+        <g fill="#191919" stroke="#282828" stroke-width="1">
+          <circle cx="84.0" cy="130" r="6.6" />
+          <circle cx="114.0" cy="130" r="6.6" />
+          <circle cx="144.0" cy="130" r="6.6" />
+          <circle cx="174.0" cy="130" r="6.6" />
+          <circle cx="204.0" cy="130" r="6.6" />
+          <circle cx="234.0" cy="130" r="6.6" />
+          <circle cx="264.0" cy="130" r="6.6" />
+          <circle cx="294.0" cy="130" r="6.6" />
+          <circle cx="324.0" cy="130" r="6.6" />
+          <circle cx="70.0" cy="156" r="6.6" />
+          <circle cx="99.0" cy="156" r="6.6" />
+          <circle cx="128.0" cy="156" r="6.6" />
+          <circle cx="157.0" cy="156" r="6.6" />
+          <circle cx="186.0" cy="156" r="6.6" />
+          <circle cx="215.0" cy="156" r="6.6" />
+          <circle cx="244.0" cy="156" r="6.6" />
+          <circle cx="273.0" cy="156" r="6.6" />
+          <circle cx="302.0" cy="156" r="6.6" />
+          <circle cx="331.0" cy="156" r="6.6" />
+          <circle cx="56.0" cy="182" r="7.4" />
+          <circle cx="88.0" cy="182" r="7.4" />
+          <circle cx="120.0" cy="182" r="7.4" />
+          <circle cx="152.0" cy="182" r="7.4" />
+          <circle cx="184.0" cy="182" r="7.4" />
+          <circle cx="216.0" cy="182" r="7.4" />
+          <circle cx="248.0" cy="182" r="7.4" />
+          <circle cx="280.0" cy="182" r="7.4" />
+          <circle cx="312.0" cy="182" r="7.4" />
+          <circle cx="344.0" cy="182" r="7.4" />
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <button class="intro__skip" type="button" data-intro-skip aria-label="跳过开场动画">
+    skip <span aria-hidden="true">esc</span>
+  </button>
+</div>
+
 <script src="/vinyl/projects.js" defer></script>
 <script src="/vinyl/stage.js?v=6" defer></script>
 <script src="/main.js?v=2" defer></script>
+<script src="/intro.js?v=2" defer></script>
 
 <img class="avatar-badge" src="/assets/images/avatar-badge.png" alt="" aria-hidden="true" width="256" height="256" />
 </body>

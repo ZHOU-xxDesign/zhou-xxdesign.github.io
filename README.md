@@ -25,6 +25,8 @@ python3 -m http.server 8000
 ├── styles.css          # 首页样式（含设计变量、响应式、动画）
 ├── work.css            # 项目详情页样式（依赖 styles.css 的变量）
 ├── main.js             # 页脚年份、邮箱点击复制、卡片滚动渐入（已无 .card，自动跳过）
+├── intro.css           # 首页开场：打字机
+├── intro.js            # 开场时间轴（rAF 逐帧驱动）
 ├── vinyl/              # 作品台组件
 │   ├── stage.css / stage.js   一屏一个项目、唱片抽出、圆点切换
 │   ├── projects.js            项目数据（accent / meta / href）
@@ -43,6 +45,35 @@ python3 -m http.server 8000
 
 > 详情页放在 `work/<slug>/index.html`，GitHub Pages 会以 `/work/<slug>/` 提供。
 > 所有页面统一用**根相对路径**（`/styles.css`、`/assets/...`），因为这是用户站点，始终在域名根目录。
+
+## 首页开场
+
+首屏进入时播放一段约 6.6 秒的开场：打字机从画面底部升起，`hello.` 和 `i'm zoya.` 逐字打在纸上，
+纸随打字不断向上长；打完后整张纸放大到铺满视口，停留 2 秒，再淡出回到正常首屏。
+
+- **只在首页**：`index.html` 里引 `intro.css` / `intro.js`，其它页面不带
+- **每个标签页只播一次**：播完写 `sessionStorage.intro = "1"`；系统开启「减弱动效」时不播
+- **随时可跳过**：点任意处、滚轮、Esc、或右下角 skip
+- **调试**：
+  - `?intro=1` 强制播放（忽略"已看过"）
+  - `?intro=0` 跳过
+  - `?introAt=4300` 定格在 4.3 秒那一帧，方便截图对照
+
+节奏和文案都集中在 `intro.js` 顶部：
+
+```js
+const LINES = [
+  { text: "hello.", ch: 118 },        // ch = 每个字的间隔（ms）
+  { text: "i'm zoya.", ch: 90, gap: 420 },
+];
+const T_START = 420;    // 打字机入场后开始打字
+const ZOOM_MS = 1050;   // 纸放大铺满的时长
+const HOLD_MS = 2000;   // 满屏停留
+const OUT_MS = 780;     // 淡出
+```
+
+> 所有运动都在 `requestAnimationFrame` 里逐帧写内联样式，**没有用 CSS transition**——
+> 部分内置浏览器里 CSS 动画的时钟会停摆（见下）。
 
 ## 项目详情页
 
