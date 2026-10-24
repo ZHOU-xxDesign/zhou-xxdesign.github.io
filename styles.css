@@ -204,13 +204,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   animation: fade-in-up 1.2s var(--ease-out-quint) both;
 }
 
-.hero__mark img {
+.hero__face {
   display: block;
   width: clamp(300px, 44vw, 640px);
   height: auto;
   -webkit-user-drag: none;
   user-select: none;
 }
+
+.face__ring { fill: #000; fill-rule: nonzero; }
+.face__pupil { fill: #000; }
+.face__dot { fill: #000; }
 
 /* 只给读屏器的文字 */
 .sr-only {

@@ -63,6 +63,56 @@
     });
   }
 
+  /* ---------- 4. 首屏头像：眼珠跟着鼠标 ------------------------------- */
+  /* 两只瞳孔是 SVG 里的独立形状，被眼白（clipPath）裁住，最多移动 AMP 个单位。
+     移动量用缓动追，停住就停 rAF；系统开了「减弱动效」就不启用。 */
+  const mark = document.querySelector(".hero__mark");
+  const pupils = mark ? Array.from(mark.querySelectorAll("[data-pupil]")) : [];
+
+  if (pupils.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const AMP = 40;
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+
+    const paint = () => {
+      const v = `translate(${cx.toFixed(2)} ${cy.toFixed(2)})`;
+      for (const el of pupils) el.setAttribute("transform", v);
+    };
+
+    const tick = () => {
+      cx += (tx - cx) * 0.18;
+      cy += (ty - cy) * 0.18;
+      if (Math.abs(tx - cx) < 0.15 && Math.abs(ty - cy) < 0.15) {
+        cx = tx;
+        cy = ty;
+        paint();
+        raf = 0;
+        return;
+      }
+      paint();
+      raf = requestAnimationFrame(tick);
+    };
+
+    const aim = (ev) => {
+      const r = mark.getBoundingClientRect();
+      if (!r.width) return;
+      const nx = (ev.clientX - (r.left + r.width / 2)) / (r.width / 2);
+      const ny = (ev.clientY - (r.top + r.height / 2)) / (r.height / 2);
+      tx = Math.max(-1, Math.min(1, nx)) * AMP;
+      ty = Math.max(-1, Math.min(1, ny)) * AMP * 0.8;
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    const reset = () => {
+      tx = 0;
+      ty = 0;
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener("pointermove", aim, { passive: true });
+    document.addEventListener("mouseleave", reset);
+    window.addEventListener("blur", reset);
+  }
+
   /* ---------- 3. 滚动渐入 --------------------------------------------- */
   const cards = document.querySelectorAll(".card");
   if (!cards.length) return;
