@@ -106,7 +106,7 @@
     try {
       actx = new AC();
       master = actx.createGain();
-      master.gain.value = 0.5;
+      master.gain.value = 0.28;
       master.connect(actx.destination);
       const n = Math.ceil(actx.sampleRate * 0.05);
       noise = actx.createBuffer(1, n, actx.sampleRate);
@@ -148,7 +148,7 @@
     hp.frequency.value = 900;
     const g = ac.createGain();
     g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(0.16 * (0.8 + r2 * 0.4), t0 + 0.003);
+    g.gain.exponentialRampToValueAtTime(0.1 * (0.8 + r2 * 0.4), t0 + 0.003);
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.052);
     src.connect(bp); bp.connect(hp); hp.connect(g); g.connect(master);
     src.start(t0);
@@ -161,7 +161,7 @@
     osc.frequency.exponentialRampToValueAtTime(85, t0 + 0.045);
     const og = ac.createGain();
     og.gain.setValueAtTime(0.0001, t0);
-    og.gain.exponentialRampToValueAtTime(0.075, t0 + 0.004);
+    og.gain.exponentialRampToValueAtTime(0.045, t0 + 0.004);
     og.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.06);
     osc.connect(og); og.connect(master);
     osc.start(t0);
