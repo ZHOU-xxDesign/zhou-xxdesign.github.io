@@ -325,10 +325,12 @@
     if (!isNaN(phr) && phr > 0) stage.style.setProperty("--phr", String(phr));
     if (!isNaN(k) && k > 0) stage.style.setProperty("--k", String(k));
 
-    // 整组比视口高时往下沉，多出来的从机器底部裁掉，纸顶正好贴住上边
+    // 整组比视口高时，各浏览器对「靠底对齐」的处理不一样（有的会往上溢出）。
+    // 这里直接量位置：只要纸顶跑到屏幕上方，就往下推回来，多出来的从机器底部裁掉。
     const layout = () => {
-      const drop = Math.max(0, stage.offsetHeight - window.innerHeight);
-      stage.style.transform = drop > 0 ? `translateY(${drop.toFixed(1)}px)` : "";
+      stage.style.transform = "";
+      const top = stage.getBoundingClientRect().top;
+      stage.style.transform = top < 0 ? `translateY(${Math.round(-top)}px)` : "";
     };
     layout();
     window.addEventListener("resize", () => {
@@ -350,6 +352,11 @@
           paper: [Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)],
           body: [Math.round(b.left), Math.round(b.top), Math.round(b.width), Math.round(b.height)],
           zoom,
+          stageH: el.querySelector(".intro__stage").offsetHeight,
+          ih: innerHeight,
+          k: getComputedStyle(el.querySelector(".intro__stage")).getPropertyValue("--k"),
+          pw: getComputedStyle(el.querySelector(".intro__stage")).getPropertyValue("--pw"),
+          phr: getComputedStyle(el.querySelector(".intro__stage")).getPropertyValue("--phr"),
         });
       }
       return;
