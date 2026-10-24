@@ -45,7 +45,7 @@
   const ZOOM_MS = 1050;
   const HOLD_MS = 600;
   const OUT_MS = 400;
-  const H0 = 0.62;          // 纸的起始高度（占满高比例）
+  const H0 = 0.76;          // 纸的起始高度（占满高比例）
 
   /* 逐字的时刻表 */
   const steps = [];
@@ -318,16 +318,23 @@
     // 调参用：?introK=1.14 把整组等比放大；
     // 多出来的高度不往上顶，而是把机器底部往屏幕下压、裁掉
     const stage = el.querySelector(".intro__stage");
+
+    // 调参用：?introK= 整体缩放、?introPh= 纸的高宽比
     const k = parseFloat(q.get("introK"));
     const phr = parseFloat(q.get("introPh"));
-    if ((!isNaN(k) && k > 0) || (!isNaN(phr) && phr > 0)) {
-      // 注意：--phr 声明在 .intro__stage 上，必须写在它自己身上才生效
-      if (!isNaN(phr) && phr > 0) stage.style.setProperty("--phr", String(phr));
-      if (!isNaN(k) && k > 0) stage.style.setProperty("--k", String(k));
-      // 放大后整组会超出视口高度：往下沉，从机器底部裁掉，纸顶正好贴住上边
+    if (!isNaN(phr) && phr > 0) stage.style.setProperty("--phr", String(phr));
+    if (!isNaN(k) && k > 0) stage.style.setProperty("--k", String(k));
+
+    // 整组比视口高时往下沉，多出来的从机器底部裁掉，纸顶正好贴住上边
+    const layout = () => {
       const drop = Math.max(0, stage.offsetHeight - window.innerHeight);
-      if (drop > 0) stage.style.transform = `translateY(${drop.toFixed(1)}px)`;
-    }
+      stage.style.transform = drop > 0 ? `translateY(${drop.toFixed(1)}px)` : "";
+    };
+    layout();
+    window.addEventListener("resize", () => {
+      layout();
+      if (!zoom) measure();
+    });
 
     measure();
     render(0);
