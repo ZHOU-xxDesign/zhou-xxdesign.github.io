@@ -171,16 +171,16 @@
 }
 
 .intro__line--hello .intro__caret {
-  width: 0.085em;
-  height: 1em;
-  margin-left: 0.05em;
+  width: 0.07em;
+  height: 0.86em;
+  margin-left: 0.14em;
 }
 
 .intro__line--sub .intro__caret {
-  width: 0.42em;
-  height: 1.14em;
-  margin-left: 0.08em;
-  vertical-align: -0.2em;
+  width: 0.34em;
+  height: 1em;
+  margin-left: 0.2em;
+  vertical-align: -0.16em;
   background: #111;
 }
 
