@@ -290,13 +290,13 @@
 /* ---------- 首屏的入场动画先按住 -------------------------------------- */
 
 /* 开场期间不让 hero 的两个大字先演完，退场时再放 */
-.is-intro .hero__hello,
+.is-intro .hero__mark,
 .is-intro .hero__name {
   animation-play-state: paused;
 }
 
 /* 退场：首屏的入场动画缩短到 0.4s，跟淡出同时收住 */
-.is-handoff .hero__hello,
+.is-handoff .hero__mark,
 .is-handoff .hero__name {
   animation-duration: 0.4s;
   animation-delay: 0s;
