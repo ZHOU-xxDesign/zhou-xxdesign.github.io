@@ -226,9 +226,9 @@
 
 /* ---------- 跳过 ------------------------------------------------------ */
 
-.intro__skip {
+.intro__skip,
+.intro__sound {
   position: fixed;
-  right: 20px;
   bottom: 20px;
   z-index: 5;
   display: inline-flex;
@@ -247,8 +247,31 @@
   backdrop-filter: blur(6px);
 }
 
+.intro__skip { right: 20px; }
+.intro__sound { right: 124px; }
+
+/* 声音开关：开着时一个小实心点 */
+.intro__sound-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22b07d;
+  transition: none;
+}
+
+.intro__sound[aria-pressed="false"] .intro__sound-dot {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+/* 开着但被浏览器拦下自动播放：点一下就亮绿灯 */
+.intro__sound.is-blocked .intro__sound-dot {
+  background: #e0a02c;
+}
+
 .intro__skip:hover,
-.intro__skip:focus-visible {
+.intro__skip:focus-visible,
+.intro__sound:hover,
+.intro__sound:focus-visible {
   color: var(--black);
   border-color: rgba(0, 0, 0, 0.4);
   outline: none;

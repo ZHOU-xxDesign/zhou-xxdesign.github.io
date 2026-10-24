@@ -82,6 +82,121 @@
     return { node, at: step.at, li: step.li, shown: false };
   });
 
+  /* ---------- 按键声 ---------------------------------------------------- */
+  /* 用 Web Audio 现场合成：一段带通白噪声（金属咔哒）+ 一个短促低频（机身闷响）。
+     浏览器的自动播放策略要求先有用户手势，拿不到就静默不响，不报错。 */
+
+  const soundBtn = el.querySelector("[data-intro-sound]");
+  const soundLabel = el.querySelector("[data-intro-sound-label]");
+  let muted = false;
+  try {
+    muted = sessionStorage.getItem("introSound") === "0";
+  } catch (err) {
+    /* 隐私模式，忽略 */
+  }
+
+  let actx = null;
+  let noise = null;
+  let master = null;
+
+  const ensureAudio = () => {
+    if (actx) return actx;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    try {
+      actx = new AC();
+      master = actx.createGain();
+      master.gain.value = 0.5;
+      master.connect(actx.destination);
+      const n = Math.ceil(actx.sampleRate * 0.05);
+      noise = actx.createBuffer(1, n, actx.sampleRate);
+      const d = noise.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+    } catch (err) {
+      actx = null;
+    }
+    return actx;
+  };
+
+  const playKey = () => {
+    if (muted) return;
+    const ac = ensureAudio();
+    if (!ac) return;
+    if (ac.state !== "running") {
+      ac.resume().catch(() => {});
+      // 被自动播放策略拦下：把开关上的点标成琥珀色，点它就是用户手势，能解锁
+      if (soundBtn) {
+        soundBtn.classList.add("is-blocked");
+        soundBtn.title = "浏览器拦下了自动播放，点一下开启按键声";
+      }
+      return; // 还没拿到手势，这一下先不响
+    }
+
+    const t0 = ac.currentTime + 0.002;
+    const r1 = Math.random();
+    const r2 = Math.random();
+
+    // 咔哒：噪声过带通
+    const src = ac.createBufferSource();
+    src.buffer = noise;
+    const bp = ac.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.frequency.value = 1900 + r1 * 900;   // 每一下音高略有差别
+    bp.Q.value = 1.3;
+    const hp = ac.createBiquadFilter();
+    hp.type = "highpass";
+    hp.frequency.value = 900;
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(0.16 * (0.8 + r2 * 0.4), t0 + 0.003);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.052);
+    src.connect(bp); bp.connect(hp); hp.connect(g); g.connect(master);
+    src.start(t0);
+    src.stop(t0 + 0.06);
+
+    // 机身：一点点木头味的低频
+    const osc = ac.createOscillator();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(150 + r1 * 50, t0);
+    osc.frequency.exponentialRampToValueAtTime(85, t0 + 0.045);
+    const og = ac.createGain();
+    og.gain.setValueAtTime(0.0001, t0);
+    og.gain.exponentialRampToValueAtTime(0.075, t0 + 0.004);
+    og.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.06);
+    osc.connect(og); og.connect(master);
+    osc.start(t0);
+    osc.stop(t0 + 0.07);
+  };
+
+  const setMuted = (v) => {
+    muted = v;
+    if (soundBtn) {
+      soundBtn.setAttribute("aria-pressed", v ? "false" : "true");
+      if (soundLabel) soundLabel.textContent = v ? "sound off" : "sound on";
+    }
+    try {
+      sessionStorage.setItem("introSound", v ? "0" : "1");
+    } catch (err) {
+      /* 忽略 */
+    }
+  };
+  setMuted(muted);
+  if (soundBtn) {
+    soundBtn.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      const next = !muted;
+      setMuted(next);
+      // 点一下本身就是手势，能顺手把被挂起的音频上下文唤醒
+      if (!next && ensureAudio()) {
+        if (actx.state !== "running") actx.resume().catch(() => {});
+        if (soundBtn) {
+          soundBtn.classList.remove("is-blocked");
+          soundBtn.removeAttribute("title");
+        }
+      }
+    });
+  }
+
   /* 键帽：每打一个字，随机（但固定）按下一颗，跟着打字一起动 */
   const keys = Array.from(el.querySelectorAll(".tw__keys circle"));
   const presses = keys.length
@@ -209,6 +324,11 @@
           ? `translateY(${(amt * 2.8).toFixed(2)}px) scale(${(1 - amt * 0.06).toFixed(3)})`
           : "";
         p.node.classList.toggle("is-down", amt > 0.55);
+      }
+      // 键落下的那一刻响一下（只补 140ms 内的，切回标签页时不会一次炸一梭子）
+      if (!p.snd && t >= p.at) {
+        p.snd = true;
+        if (t - p.at < 140) playKey();
       }
     }
 
@@ -352,11 +472,7 @@
           paper: [Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)],
           body: [Math.round(b.left), Math.round(b.top), Math.round(b.width), Math.round(b.height)],
           zoom,
-          stageH: el.querySelector(".intro__stage").offsetHeight,
-          ih: innerHeight,
-          k: getComputedStyle(el.querySelector(".intro__stage")).getPropertyValue("--k"),
-          pw: getComputedStyle(el.querySelector(".intro__stage")).getPropertyValue("--pw"),
-          phr: getComputedStyle(el.querySelector(".intro__stage")).getPropertyValue("--phr"),
+          audio: actx ? actx.state : "none",
         });
       }
       return;
@@ -382,7 +498,8 @@
     window.addEventListener("wheel", skip, { passive: true });
     window.addEventListener("touchstart", skip, { passive: true });
     window.addEventListener("pointerdown", (ev) => {
-      if (ev.target === skipBtn) return;
+      if (skipBtn && skipBtn.contains(ev.target)) return;
+      if (soundBtn && soundBtn.contains(ev.target)) return;
       skip();
     });
   };
