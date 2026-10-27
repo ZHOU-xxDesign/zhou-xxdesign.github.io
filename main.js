@@ -64,17 +64,37 @@
   }
 
   /* ---------- 4. 首屏头像：眼珠跟着鼠标 ------------------------------- */
-  /* 两只瞳孔是 SVG 里的独立形状，被眼白（clipPath）裁住，最多移动 AMP 个单位。
+  /* 两只瞳孔是 SVG 里的独立形状，被眼白（clipPath）裁住；外面还套了一层
+     眼眶组，跟着移动一小段并轻微缩放——眼珠转的时候眼白也跟着变。
      移动量用缓动追，停住就停 rAF；系统开了「减弱动效」就不启用。 */
   const mark = document.querySelector(".hero__mark");
+  const eyes = mark ? Array.from(mark.querySelectorAll("[data-eye]")) : [];
   const pupils = mark ? Array.from(mark.querySelectorAll("[data-pupil]")) : [];
 
   if (pupils.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const AMP = 40;
+    const AMP = 40;        // 瞳孔总位移（viewBox 单位，1200 对应 640px）
+    const EYE_K = 0.3;     // 其中多少分给眼眶
+    let nx = 0, ny = 0;    // 目标（归一化 -1..1）
     let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
 
     const paint = () => {
-      const v = `translate(${cx.toFixed(2)} ${cy.toFixed(2)})`;
+      const ex = cx * EYE_K;
+      const ey = cy * EYE_K;
+      const px = cx - ex;
+      const py = cy - ey;
+      const sx = (1 + 0.05 * Math.abs(nx)).toFixed(4);
+      const sy = (1 + 0.012 * Math.abs(ny)).toFixed(4);
+
+      for (const g of eyes) {
+        const gx = +g.dataset.cx || 0;
+        const gy = +g.dataset.cy || 0;
+        g.setAttribute(
+          "transform",
+          `translate(${ex.toFixed(2)} ${ey.toFixed(2)}) ` +
+          `translate(${gx} ${gy}) scale(${sx} ${sy}) translate(${-gx} ${-gy})`
+        );
+      }
+      const v = `translate(${px.toFixed(2)} ${py.toFixed(2)})`;
       for (const el of pupils) el.setAttribute("transform", v);
     };
 
@@ -95,14 +115,16 @@
     const aim = (ev) => {
       const r = mark.getBoundingClientRect();
       if (!r.width) return;
-      const nx = (ev.clientX - (r.left + r.width / 2)) / (r.width / 2);
-      const ny = (ev.clientY - (r.top + r.height / 2)) / (r.height / 2);
-      tx = Math.max(-1, Math.min(1, nx)) * AMP;
-      ty = Math.max(-1, Math.min(1, ny)) * AMP * 0.8;
+      nx = Math.max(-1, Math.min(1, (ev.clientX - (r.left + r.width / 2)) / (r.width / 2)));
+      ny = Math.max(-1, Math.min(1, (ev.clientY - (r.top + r.height / 2)) / (r.height / 2)));
+      tx = nx * AMP;
+      ty = ny * AMP * 0.8;
       if (!raf) raf = requestAnimationFrame(tick);
     };
 
     const reset = () => {
+      nx = 0;
+      ny = 0;
       tx = 0;
       ty = 0;
       if (!raf) raf = requestAnimationFrame(tick);
