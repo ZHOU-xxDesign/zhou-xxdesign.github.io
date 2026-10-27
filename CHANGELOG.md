@@ -17,6 +17,10 @@
   - 开场结束时的入场动画改用 `.hero__mark`，节奏不变
   - `assets/images/avatar-hero.png`（1200×1200）留着做 SVG 的底稿
 
+### 移除
+- 首屏名字后面的别名 **zoya**（`hero__name-alt` / `hero__name-br` 及对应样式一并删掉），
+  光标回到「zhou xiaoxu」末尾
+
 ## [1.3.0] — 2026-10-24
 
 首页加了一段开场动画。这次只改首页，详情页不动。
