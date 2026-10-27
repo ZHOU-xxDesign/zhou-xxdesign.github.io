@@ -231,6 +231,7 @@
   var WHEEL_LOCK = 520;    // 两次切换之间的最短间隔
   var WHEEL_STEP = 24;     // 累积多少才算一次有效滚动
   var lastSwitch = 0;
+  var lastWheelAt = 0;
   var acc = 0;
 
   function stageInFocus() {
@@ -246,13 +247,23 @@
       if (REDUCED || ev.ctrlKey) return;          // 减弱动效 / 缩放：不拦
       if (!stageInFocus() || Math.abs(ev.deltaY) < 1) return;
 
+      var now = performance.now();
+      // 距上一次滚轮不到 180ms 就算同一次手势（触控板惯性会连发）
+      var sameGesture = now - lastWheelAt < 180;
+      lastWheelAt = now;
+
       var next = current + (ev.deltaY > 0 ? 1 : -1);
-      if (next < 0 || next >= PROJECTS.length) { acc = 0; return; }
+      if (next < 0 || next >= PROJECTS.length) {
+        // 刚切到最后一个（或第一个）时，这一次手势的余势先吃掉，
+        // 停手之后再滚才让页面走——不然惯性会直接把作品区带过去
+        if (sameGesture || now - lastSwitch < 400) ev.preventDefault();
+        acc = 0;
+        return;
+      }
 
       ev.preventDefault();
       acc += ev.deltaY;
 
-      var now = performance.now();
       if (now - lastSwitch < WHEEL_LOCK || Math.abs(acc) < WHEEL_STEP) return;
 
       acc = 0;
