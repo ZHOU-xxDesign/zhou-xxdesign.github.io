@@ -223,6 +223,44 @@
     e.preventDefault();
   });
 
+  /* ---------- 滚轮切换 ---------- */
+  /* 鼠标在作品台上滚动：下滑看下一个，上滑看上一个。
+     到两端就放行，让页面正常滚动，不会把人困在这里。
+     触控板一次轻扫会连发十几个事件，所以用「累积量 + 冷却」控制节奏。 */
+  var sectionEl = document.querySelector(".works--stage");
+  var WHEEL_LOCK = 520;    // 两次切换之间的最短间隔
+  var WHEEL_STEP = 24;     // 累积多少才算一次有效滚动
+  var lastSwitch = 0;
+  var acc = 0;
+
+  function stageInFocus() {
+    if (!sectionEl) return false;
+    var r = sectionEl.getBoundingClientRect();
+    var vh = window.innerHeight;
+    // 区块基本占满视口中间那段才接管
+    return r.top < vh * 0.32 && r.bottom > vh * 0.68;
+  }
+
+  if (sectionEl) {
+    window.addEventListener("wheel", function (ev) {
+      if (REDUCED || ev.ctrlKey) return;          // 减弱动效 / 缩放：不拦
+      if (!stageInFocus() || Math.abs(ev.deltaY) < 1) return;
+
+      var next = current + (ev.deltaY > 0 ? 1 : -1);
+      if (next < 0 || next >= PROJECTS.length) { acc = 0; return; }
+
+      ev.preventDefault();
+      acc += ev.deltaY;
+
+      var now = performance.now();
+      if (now - lastSwitch < WHEEL_LOCK || Math.abs(acc) < WHEEL_STEP) return;
+
+      acc = 0;
+      lastSwitch = now;
+      select(next);
+    }, { passive: false });
+  }
+
   /* ---------- 起步 ---------- */
 
   // 区块标题右边的区间 (001 — 00N) 跟着项目数走，不用手改 HTML
