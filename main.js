@@ -63,47 +63,70 @@
     });
   }
 
-  /* ---------- 4. 首屏头像：眼珠跟着鼠标 ------------------------------- */
-  /* 两只瞳孔是 SVG 里的独立形状，被眼白（clipPath）裁住；外面还套了一层
-     眼眶组，跟着移动一小段并轻微缩放——眼珠转的时候眼白也跟着变。
-     移动量用缓动追，停住就停 rAF；系统开了「减弱动效」就不启用。 */
+  /* ---------- 4. 首屏头像：眼珠 / 眼眶跟着鼠标 -------------------------- */
+  /* 眼眶的两种形态是从「向左看」「向右看」两张图描出来的（各 72 个点，角度一一对应），
+     指针横向位置在两者之间插值——瞳孔走，眼线也跟着鼓。
+     纵向没有参考图，只让瞳孔上下小幅移动。 */
   const mark = document.querySelector(".hero__mark");
-  const eyes = mark ? Array.from(mark.querySelectorAll("[data-eye]")) : [];
+  const rings = mark ? Array.from(mark.querySelectorAll("[data-ring]")) : [];
+  const clips = mark ? Array.from(mark.querySelectorAll("[data-clip]")) : [];
   const pupils = mark ? Array.from(mark.querySelectorAll("[data-pupil]")) : [];
 
-  if (pupils.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const AMP = 40;        // 瞳孔总位移（viewBox 单位，1200 对应 640px）
-    const EYE_K = 0.3;     // 其中多少分给眼眶
-    let nx = 0, ny = 0;    // 目标（归一化 -1..1）
-    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+  if (rings.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const parsePath = (d) =>
+      d.slice(1).replace(/Z\s*$/, "").split("L").map((p) => p.split(" ").map(Number));
+    const toPath = (pts) =>
+      "M" + pts.map((p) => Math.round(p[0]) + " " + Math.round(p[1])).join("L") + "Z";
+    const inset = (pts, cx, cy, d) =>
+      pts.map(([x, y]) => {
+        const vx = cx - x;
+        const vy = cy - y;
+        const len = Math.hypot(vx, vy) || 1;
+        return [x + (vx / len) * d, y + (vy / len) * d];
+      });
+
+    const eyes = rings.map((ring, i) => {
+      const eye = ring.closest("[data-eye]");
+      return {
+        ring,
+        clip: clips[i],
+        pupil: pupils[i],
+        cx: +eye.dataset.cx,
+        cy: +eye.dataset.cy,
+        x0: +pupils[i].getAttribute("x"),
+        l: parsePath(document.getElementById("face-pose-l" + i).getAttribute("d")),
+        r: parsePath(document.getElementById("face-pose-r" + i).getAttribute("d")),
+      };
+    });
+
+    const TRAVEL = 158;   // 中间 → 一侧的位移量（两张原图之间的实际差值）
+    const VERT = 16;      // 上下看时瞳孔的位移
+    let want = 0.5;       // 0 = 看左，1 = 看右
+    let wantV = 0;
+    let cur = 0.5;
+    let curV = 0;
+    let raf = 0;
 
     const paint = () => {
-      const ex = cx * EYE_K;
-      const ey = cy * EYE_K;
-      const px = cx - ex;
-      const py = cy - ey;
-      const sx = (1 + 0.05 * Math.abs(nx)).toFixed(4);
-      const sy = (1 + 0.012 * Math.abs(ny)).toFixed(4);
-
-      for (const g of eyes) {
-        const gx = +g.dataset.cx || 0;
-        const gy = +g.dataset.cy || 0;
-        g.setAttribute(
-          "transform",
-          `translate(${ex.toFixed(2)} ${ey.toFixed(2)}) ` +
-          `translate(${gx} ${gy}) scale(${sx} ${sy}) translate(${-gx} ${-gy})`
-        );
+      for (const e of eyes) {
+        const pts = e.l.map((p, k) => [
+          p[0] + (e.r[k][0] - p[0]) * cur,
+          p[1] + (e.r[k][1] - p[1]) * cur,
+        ]);
+        const outer = toPath(pts);
+        e.clip.setAttribute("d", outer);
+        e.ring.setAttribute("d", outer + toPath(inset(pts, e.cx, e.cy, 30).reverse()));
+        e.pupil.setAttribute("x", (e.x0 + (cur - 0.5) * TRAVEL).toFixed(1));
+        e.pupil.setAttribute("transform", "translate(0 " + curV.toFixed(1) + ")");
       }
-      const v = `translate(${px.toFixed(2)} ${py.toFixed(2)})`;
-      for (const el of pupils) el.setAttribute("transform", v);
     };
 
     const tick = () => {
-      cx += (tx - cx) * 0.18;
-      cy += (ty - cy) * 0.18;
-      if (Math.abs(tx - cx) < 0.15 && Math.abs(ty - cy) < 0.15) {
-        cx = tx;
-        cy = ty;
+      cur += (want - cur) * 0.16;
+      curV += (wantV - curV) * 0.16;
+      if (Math.abs(want - cur) < 0.002 && Math.abs(wantV - curV) < 0.3) {
+        cur = want;
+        curV = wantV;
         paint();
         raf = 0;
         return;
@@ -115,18 +138,16 @@
     const aim = (ev) => {
       const r = mark.getBoundingClientRect();
       if (!r.width) return;
-      nx = Math.max(-1, Math.min(1, (ev.clientX - (r.left + r.width / 2)) / (r.width / 2)));
-      ny = Math.max(-1, Math.min(1, (ev.clientY - (r.top + r.height / 2)) / (r.height / 2)));
-      tx = nx * AMP;
-      ty = ny * AMP * 0.8;
+      const nx = Math.max(-1, Math.min(1, (ev.clientX - (r.left + r.width / 2)) / (r.width / 2)));
+      const ny = Math.max(-1, Math.min(1, (ev.clientY - (r.top + r.height / 2)) / (r.height / 2)));
+      want = (nx + 1) / 2;
+      wantV = ny * VERT;
       if (!raf) raf = requestAnimationFrame(tick);
     };
 
     const reset = () => {
-      nx = 0;
-      ny = 0;
-      tx = 0;
-      ty = 0;
+      want = 0.5;
+      wantV = 0;
       if (!raf) raf = requestAnimationFrame(tick);
     };
 
