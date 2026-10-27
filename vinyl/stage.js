@@ -234,6 +234,28 @@
   var lastWheelAt = 0;
   var acc = 0;
 
+  var chromeEl = document.querySelector(".chrome");
+  var chromeH = chromeEl ? chromeEl.getBoundingClientRect().height : 0;
+
+  // 把作品区对齐到「顶栏下方、正好占满一屏」的位置。
+  // 用 rAF 自己补间：CSS 的 smooth 在很多环境里不可靠，而且要和滚轮抢
+  var alignRaf = 0;
+  function alignStage() {
+    var to = sectionEl.getBoundingClientRect().top + window.scrollY - chromeH;
+    var from = window.scrollY;
+    if (Math.abs(from - to) < 4) return;
+    if (REDUCED) { window.scrollTo(0, to); return; }
+
+    cancelAnimationFrame(alignRaf);
+    var t0 = performance.now();
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / 260);
+      var e = 1 - Math.pow(1 - k, 3);
+      window.scrollTo({ top: from + (to - from) * e, behavior: "instant" });
+      alignRaf = k < 1 ? requestAnimationFrame(step) : 0;
+    })(t0);
+  }
+
   function stageInFocus() {
     if (!sectionEl) return false;
     var r = sectionEl.getBoundingClientRect();
@@ -262,6 +284,7 @@
       }
 
       ev.preventDefault();
+      alignStage();
       acc += ev.deltaY;
 
       if (now - lastSwitch < WHEEL_LOCK || Math.abs(acc) < WHEEL_STEP) return;
