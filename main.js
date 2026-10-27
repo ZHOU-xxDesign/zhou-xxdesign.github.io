@@ -99,7 +99,7 @@
       };
     });
 
-    const TRAVEL = 158;   // 中间 → 一侧的位移量（两张原图之间的实际差值）
+    const TRAVEL = 190;   // 中间 → 一侧的位移量，略大于原图差值，保证两端顶住眶线
     const VERT = 16;      // 上下看时瞳孔的位移
     let want = 0.5;       // 0 = 看左，1 = 看右
     let wantV = 0;
@@ -114,8 +114,10 @@
           p[1] + (e.r[k][1] - p[1]) * cur,
         ]);
         const outer = toPath(pts);
-        e.clip.setAttribute("d", outer);
-        e.ring.setAttribute("d", outer + toPath(inset(pts, e.cx, e.cy, 30).reverse()));
+        const socket = inset(pts, e.cx, e.cy, 30);
+        // 瞳孔裁到「眼白」而不是外轮廓：顶到眶线时会被裁齐，不会留缝
+        e.clip.setAttribute("d", toPath(socket));
+        e.ring.setAttribute("d", outer + toPath(socket.slice().reverse()));
         e.pupil.setAttribute("x", (e.x0 + (cur - 0.5) * TRAVEL).toFixed(1));
         e.pupil.setAttribute("transform", "translate(0 " + curV.toFixed(1) + ")");
       }
