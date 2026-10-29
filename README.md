@@ -115,7 +115,8 @@ const OUT_MS = 400;     // 淡出
 ### 详情页可用的样式类
 
 `case__meta`（元信息栅格）· `case__stats` / `case__stat`（数据条）· `case__quote`（手写体金句）·
-`case__points` + `case__points--2` / `--3` + `case__point`（编号要点）· `case__figures` / `case__figure`（配图组）
+`case__points` + `case__points--2` / `--3` + `case__point`（编号要点）· `case__figures` / `case__figure`（配图组）·
+`case__motion`（动效网格，默认三列）+ `--pair`（两列）/ `--single`（单列）/ `--half`（半幅居中）/ `--mixed`（统一 5:3）/ `--square`
 
 ## 设计语言
 
@@ -127,6 +128,7 @@ const OUT_MS = 400;     // 淡出
 | 小标签 | Space Mono 等宽大写，字距 `0.3em`–`0.4em` |
 | 正文 | Inter |
 | 作品区 | 一屏一个项目：黑胶封套 + 唱片（hover 抽出 62%），圆点或滚轮切换 |
+| 回到顶部 | 滚过半屏才浮出，10px 等宽小药丸，压在右下角头像角标上方 |
 | 分隔 | 1px 细线，`#f3f4f6` |
 
 三个字体族定义在 `styles.css` 顶部的 `--font-hand` / `--font-body` / `--font-mono`。
