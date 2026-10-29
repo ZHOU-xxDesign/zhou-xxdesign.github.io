@@ -301,6 +301,12 @@
   .case__motion--single { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* 半幅并居中：宽幅动效但只想占一半（视觉权重和并排的小图接近） */
+@media (min-width: 640px) {
+  .case__motion--half { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .case__motion--half > figure { width: 50%; }
+}
+
 /* 两格的情况：不要空出第三列 */
 @media (min-width: 640px) {
   .case__motion--pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
