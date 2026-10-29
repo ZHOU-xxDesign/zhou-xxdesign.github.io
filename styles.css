@@ -774,7 +774,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   letter-spacing: 0.4em;
   color: var(--gray-300);
 }
-@media (min-width: 768px) {
+/* 横排要能装下三行字：最后一句 54 个字符，768–960 之间放不下会挤成两行，
+   所以横排的断点提到 960，中间宽度继续用竖排 */
+@media (min-width: 960px) {
   .colophon {
     flex-direction: row;
     justify-content: space-between;
