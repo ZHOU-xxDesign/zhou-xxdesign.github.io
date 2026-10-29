@@ -296,6 +296,11 @@
   .case__motion { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
+/* 单格：整幅演示（1000×462 的宽幅动效） */
+@media (min-width: 640px) {
+  .case__motion--single { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* 两格的情况：不要空出第三列 */
 @media (min-width: 640px) {
   .case__motion--pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
