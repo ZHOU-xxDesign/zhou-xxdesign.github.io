@@ -272,6 +272,52 @@
     }, { passive: false });
   }
 
+  /* ---------- 滑到作品区时自动校准 ---------- */
+  /* 如果整块没完整露出（标题、唱片、圆点），停下来后自动补到「顶栏下方正好一屏」。
+     只在下滑时做，往回滚不会被吸住；差太远（还在路过）也不管。 */
+  var chromeEl = document.querySelector(".chrome");
+  var chromeH = chromeEl ? chromeEl.getBoundingClientRect().height : 0;
+  var alignTimer = 0;
+  var alignRaf = 0;
+  var aligningUntil = 0;
+  var lastY = window.scrollY;
+
+  function alignTo(target) {
+    var from = window.scrollY;
+    if (REDUCED) { window.scrollTo(0, target); return; }
+    cancelAnimationFrame(alignRaf);
+    var t0 = performance.now();
+    aligningUntil = t0 + 420;
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / 300);
+      var e = 1 - Math.pow(1 - k, 3);
+      window.scrollTo({ top: from + (target - from) * e, behavior: "instant" });
+      alignRaf = k < 1 ? requestAnimationFrame(step) : 0;
+    })(t0);
+  }
+
+  window.addEventListener("scroll", function () {
+    var y = window.scrollY;
+    var down = y > lastY;
+    lastY = y;
+    if (performance.now() < aligningUntil) return;   // 自己补间产生的事件，忽略
+    if (!down) { clearTimeout(alignTimer); return; }
+
+    clearTimeout(alignTimer);
+    alignTimer = setTimeout(function () {
+      if (performance.now() < aligningUntil) return;
+      var rect = sectionEl.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var target = rect.top + window.scrollY - chromeH;
+      var delta = target - window.scrollY;
+      if (Math.abs(delta) < 6) return;              // 已经对齐
+      if (Math.abs(delta) > vh * 0.5) return;       // 差太远：还在路过
+      var visible = Math.min(rect.bottom, vh) - Math.max(rect.top, chromeH);
+      if (visible / (vh - chromeH) < 0.55) return;  // 露得太少，先不吸
+      alignTo(target);
+    }, 170);
+  }, { passive: true });
+
   /* ---------- 起步 ---------- */
 
   // 区块标题右边的区间 (001 — 00N) 跟着项目数走，不用手改 HTML
