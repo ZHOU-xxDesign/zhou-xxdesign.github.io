@@ -158,6 +158,39 @@
     window.addEventListener("blur", reset);
   }
 
+  /* ---------- 5. 回到顶部 --------------------------------------------- */
+  /* 滚过半屏才浮出来；淡入用 rAF 自己写（部分内置浏览器里 CSS 过渡不跑） */
+  const topBtn = document.querySelector("[data-to-top]");
+  if (topBtn) {
+    // 直接切类：不用过渡也不用 rAF——预览环境里动画时钟会停摆，
+    // 而这个按钮必须"该出现就一定出现"
+    const sync = () => {
+      topBtn.classList.toggle("is-on", window.scrollY > window.innerHeight * 0.6);
+    };
+
+    window.addEventListener("scroll", sync, { passive: true });
+    sync();
+    // 带锚点进来（或刷新后浏览器恢复到中间）时，滚动的第一帧不一定有事件
+    setTimeout(sync, 350);
+
+    topBtn.addEventListener("click", () => {
+      const from = window.scrollY;
+      if (!from) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        window.scrollTo(0, 0);
+        return;
+      }
+      const t0 = performance.now();
+      const dur = Math.min(700, 260 + from * 0.12);
+      (function step(now) {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - k, 3);
+        window.scrollTo({ top: from * (1 - e), behavior: "instant" });
+        if (k < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }
+
   /* ---------- 3. 滚动渐入 --------------------------------------------- */
   const cards = document.querySelectorAll(".card");
   if (!cards.length) return;
