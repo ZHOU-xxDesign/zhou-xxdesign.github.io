@@ -63,16 +63,19 @@
     });
   }
 
-  /* ---------- 4. 首屏头像：眼珠 / 眼眶跟着鼠标 -------------------------- */
+  /* ---------- 4. 眼动：首屏大脸 + 右下角标 ---------------------------- */
   /* 眼眶的两种形态是从「向左看」「向右看」两张图描出来的（各 72 个点，角度一一对应），
      指针横向位置在两者之间插值——瞳孔走，眼线也跟着鼓。
-     纵向没有参考图，只让瞳孔上下小幅移动。 */
-  const mark = document.querySelector(".hero__mark");
-  const rings = mark ? Array.from(mark.querySelectorAll("[data-ring]")) : [];
-  const clips = mark ? Array.from(mark.querySelectorAll("[data-clip]")) : [];
-  const pupils = mark ? Array.from(mark.querySelectorAll("[data-pupil]")) : [];
+     首屏那只全程跟着指针；右下角标只在鼠标移到它上面时才动，移开回正。 */
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp1 = (v) => (v < -1 ? -1 : v > 1 ? 1 : v);
 
-  if (rings.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  function initFace(root, prefix) {
+    const rings = Array.from(root.querySelectorAll("[data-ring]"));
+    const clips = Array.from(root.querySelectorAll("[data-clip]"));
+    const pupils = Array.from(root.querySelectorAll("[data-pupil]"));
+    if (!rings.length) return null;
+
     const parsePath = (d) =>
       d.slice(1).replace(/Z\s*$/, "").split("L").map((p) => p.split(" ").map(Number));
     const toPath = (pts) =>
@@ -87,6 +90,9 @@
 
     const eyes = rings.map((ring, i) => {
       const eye = ring.closest("[data-eye]");
+      const l = document.getElementById(prefix + "l" + i);
+      const r = document.getElementById(prefix + "r" + i);
+      if (!eye || !l || !r) return null;
       return {
         ring,
         clip: clips[i],
@@ -94,10 +100,11 @@
         cx: +eye.dataset.cx,
         cy: +eye.dataset.cy,
         x0: +pupils[i].getAttribute("x"),
-        l: parsePath(document.getElementById("face-pose-l" + i).getAttribute("d")),
-        r: parsePath(document.getElementById("face-pose-r" + i).getAttribute("d")),
+        l: parsePath(l.getAttribute("d")),
+        r: parsePath(r.getAttribute("d")),
       };
     });
+    if (eyes.some((e) => !e)) return null;
 
     const TRAVEL = 190;   // 中间 → 一侧的位移量，略大于原图差值，保证两端顶住眶线
     const VERT = 16;      // 上下看时瞳孔的位移
@@ -137,25 +144,51 @@
       raf = requestAnimationFrame(tick);
     };
 
-    const aim = (ev) => {
-      const r = mark.getBoundingClientRect();
-      if (!r.width) return;
-      const nx = Math.max(-1, Math.min(1, (ev.clientX - (r.left + r.width / 2)) / (r.width / 2)));
-      const ny = Math.max(-1, Math.min(1, (ev.clientY - (r.top + r.height / 2)) / (r.height / 2)));
-      want = (nx + 1) / 2;
-      wantV = ny * VERT;
-      if (!raf) raf = requestAnimationFrame(tick);
+    return {
+      aim(nx, ny) {
+        want = (clamp1(nx) + 1) / 2;
+        wantV = clamp1(ny) * VERT;
+        if (!raf) raf = requestAnimationFrame(tick);
+      },
+      reset() {
+        want = 0.5;
+        wantV = 0;
+        if (!raf) raf = requestAnimationFrame(tick);
+      },
     };
+  }
 
-    const reset = () => {
-      want = 0.5;
-      wantV = 0;
-      if (!raf) raf = requestAnimationFrame(tick);
-    };
+  if (!reducedMotion) {
+    // 首屏：整页移动指针都跟着走
+    const heroMark = document.querySelector(".hero__mark");
+    const heroFace = heroMark ? initFace(heroMark, "face-pose-") : null;
+    if (heroFace) {
+      window.addEventListener("pointermove", (ev) => {
+        const r = heroMark.getBoundingClientRect();
+        if (!r.width) return;
+        heroFace.aim(
+          (ev.clientX - (r.left + r.width / 2)) / (r.width / 2),
+          (ev.clientY - (r.top + r.height / 2)) / (r.height / 2)
+        );
+      }, { passive: true });
+      document.addEventListener("mouseleave", heroFace.reset);
+      window.addEventListener("blur", heroFace.reset);
+    }
 
-    window.addEventListener("pointermove", aim, { passive: true });
-    document.addEventListener("mouseleave", reset);
-    window.addEventListener("blur", reset);
+    // 右下角标：鼠标移到角标范围内才动，移开回正
+    const badge = document.querySelector('[data-face="badge"]');
+    const badgeFace = badge ? initFace(badge, "badge-pose-") : null;
+    if (badgeFace) {
+      window.addEventListener("pointermove", (ev) => {
+        const b = badge.getBoundingClientRect();
+        if (ev.clientX < b.left || ev.clientX > b.right || ev.clientY < b.top || ev.clientY > b.bottom) return;
+        badgeFace.aim(
+          (ev.clientX - (b.left + b.width / 2)) / (b.width / 2),
+          (ev.clientY - (b.top + b.height / 2)) / (b.height / 2)
+        );
+      }, { passive: true });
+      badge.addEventListener("pointerleave", () => badgeFace.reset());
+    }
   }
 
   /* ---------- 5. 回到顶部 --------------------------------------------- */
