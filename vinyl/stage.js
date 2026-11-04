@@ -274,7 +274,8 @@
 
   /* ---------- 滑到作品区时自动校准 ---------- */
   /* 如果整块没完整露出（标题、唱片、圆点），停下来后自动补到「顶栏下方正好一屏」。
-     只在下滑时做，往回滚不会被吸住；差太远（还在路过）也不管。 */
+     下滑时露 55% 就吸；往回滚时要求更高（露 80% 才吸），避免只是路过也被拽住。
+     差太远（超过半屏）不管。 */
   var chromeEl = document.querySelector(".chrome");
   var chromeH = chromeEl ? chromeEl.getBoundingClientRect().height : 0;
   var alignTimer = 0;
@@ -301,7 +302,6 @@
     var down = y > lastY;
     lastY = y;
     if (performance.now() < aligningUntil) return;   // 自己补间产生的事件，忽略
-    if (!down) { clearTimeout(alignTimer); return; }
 
     clearTimeout(alignTimer);
     alignTimer = setTimeout(function () {
@@ -313,7 +313,9 @@
       if (Math.abs(delta) < 6) return;              // 已经对齐
       if (Math.abs(delta) > vh * 0.5) return;       // 差太远：还在路过
       var visible = Math.min(rect.bottom, vh) - Math.max(rect.top, chromeH);
-      if (visible / (vh - chromeH) < 0.55) return;  // 露得太少，先不吸
+      // 下滑：露 55% 就吸；往回滚：整块快看全了（80%）才吸
+      var need = down ? 0.55 : 0.8;
+      if (visible / (vh - chromeH) < need) return;
       alignTo(target);
     }, 170);
   }, { passive: true });
