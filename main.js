@@ -70,7 +70,8 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const clamp1 = (v) => (v < -1 ? -1 : v > 1 ? 1 : v);
 
-  function initFace(root, prefix, rest) {
+  function initFace(root, prefix, rest, travel) {
+    const TRAVEL_OPT = travel || 190;
     const REST = rest === undefined ? 0.5 : rest;   // 默认看向正前方；角标传 0（看左）
     const rings = Array.from(root.querySelectorAll("[data-ring]"));
     const clips = Array.from(root.querySelectorAll("[data-clip]"));
@@ -107,7 +108,7 @@
     });
     if (eyes.some((e) => !e)) return null;
 
-    const TRAVEL = 190;   // 中间 → 一侧的位移量，略大于原图差值，保证两端顶住眶线
+    const TRAVEL = TRAVEL_OPT;   // 中间 → 一侧的位移量
     const VERT = 16;      // 上下看时瞳孔的位移
     let want = REST;      // 0 = 看左，1 = 看右，0.5 = 正前方
     let wantV = 0;
@@ -178,7 +179,7 @@
 
     // 右下角标：鼠标移到角标范围内才动，移开回正
     const badge = document.querySelector('[data-face="badge"]');
-    const badgeFace = badge ? initFace(badge, "badge-pose-", 0) : null;
+    const badgeFace = badge ? initFace(badge, "badge-pose-", 0, 158) : null;
     if (badgeFace) {
       window.addEventListener("pointermove", (ev) => {
         const b = badge.getBoundingClientRect();
