@@ -191,6 +191,65 @@
     });
   }
 
+  /* ---------- 6. 区块吸附 --------------------------------------------- */
+  /* 首页三块（首屏 / 作品 / 关于）用同一套规则：滚动停下时，如果离某块的
+     「对齐位」不超过 42% 屏高（约等于该块露出 58% 以上），就补过去。
+     对齐位 = 该块顶边贴到假浏览器窗口下沿；最后一块贴不到时按页面底部算。 */
+  const snapEls = [".hero", ".works--stage", ".about"]
+    .map((sel) => document.querySelector(sel))
+    .filter(Boolean);
+
+  if (snapEls.length === 3) {
+    const chromeEl = document.querySelector(".chrome");
+    const chromeH = chromeEl ? chromeEl.getBoundingClientRect().height : 0;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let snapTimer = 0;
+    let snapRaf = 0;
+    let snapUntil = 0;
+
+    const maxY = () =>
+      Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+    const targetY = (el) => {
+      const y = el.getBoundingClientRect().top + window.scrollY - chromeH;
+      return Math.max(0, Math.min(Math.round(y), maxY()));
+    };
+
+    const glide = (to) => {
+      const from = window.scrollY;
+      if (reduced) { window.scrollTo(0, to); return; }
+      cancelAnimationFrame(snapRaf);
+      const t0 = performance.now();
+      snapUntil = t0 + 420;
+      (function step(now) {
+        const k = Math.min(1, (now - t0) / 300);
+        const e = 1 - Math.pow(1 - k, 3);
+        window.scrollTo({ top: from + (to - from) * e, behavior: "instant" });
+        snapRaf = k < 1 ? requestAnimationFrame(step) : 0;
+      })(t0);
+    };
+
+    const trySnap = () => {
+      if (performance.now() < snapUntil) return;
+      const vh = window.innerHeight;
+      let best = 0;
+      let found = false;
+      for (const el of snapEls) {
+        const d = targetY(el) - window.scrollY;
+        if (Math.abs(d) < 6) return;            // 已经对齐了某一块
+        if (!found || Math.abs(d) < Math.abs(best)) { best = d; found = true; }
+      }
+      if (!found || Math.abs(best) > vh * 0.42) return;   // 在块中间：不吸
+      glide(window.scrollY + best);
+    };
+
+    window.addEventListener("scroll", () => {
+      if (performance.now() < snapUntil) return;  // 自己补间产生的事件
+      clearTimeout(snapTimer);
+      snapTimer = setTimeout(trySnap, 170);
+    }, { passive: true });
+  }
+
   /* ---------- 3. 滚动渐入 --------------------------------------------- */
   const cards = document.querySelectorAll(".card");
   if (!cards.length) return;
