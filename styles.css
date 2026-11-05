@@ -89,10 +89,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- 顶部进度条 ----------------------------------------------- */
 
-/* 贴在整个视口最上沿，压在假浏览器窗口条上面；纯装饰，不接事件 */
+/* 贴在假浏览器窗口条的下沿；纯装饰，不接事件 */
 .progress {
   position: fixed;
-  top: 0;
+  top: var(--chrome-h);
   left: 0;
   right: 0;
   height: 2px;
