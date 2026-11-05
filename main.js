@@ -3,7 +3,7 @@
    1. 页脚年份
    2. 邮箱：一次点击同时「打开邮件客户端 + 复制地址」
    3. 眼动：首屏大脸 + 右下角标（跟随整页指针）
-   4. 回到顶部
+   4. 回到顶部 / 角标点击回首页
    5. 首页三块（首屏 / 作品 / 关于）按显露比例吸附
    6. 顶部阅读进度
    7. 作品卡片滚动渐入（带保险回退；现在首页没有 .card，这段会自动跳过）
@@ -235,6 +235,21 @@
         window.scrollTo({ top: from * (1 - e), behavior: "instant" });
         if (k < 1) requestAnimationFrame(step);
       })(t0);
+    });
+  }
+
+  /* 右下角标：点击回首页。详情页交给 <a href="/"> 正常跳转；
+     已经在首页时只是回到顶部，复用上面「top」按钮的补间。 */
+  const homeBadge = document.querySelector("[data-home]");
+  if (homeBadge) {
+    homeBadge.addEventListener("click", (ev) => {
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || ev.button !== 0) return;
+      const path = location.pathname.replace(/index\.html$/, "");
+      if (path !== "/") return;          // 详情页：走默认跳转
+      ev.preventDefault();
+      const topBtn = document.querySelector("[data-to-top]");
+      if (topBtn) topBtn.click();
+      else window.scrollTo(0, 0);
     });
   }
 

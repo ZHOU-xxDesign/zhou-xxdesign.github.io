@@ -886,12 +886,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- 右下角头像角标 ------------------------------------------- */
 
-/* 固定在视口右下角，所有页面都有。装饰性元素：触屏上不挡点击，桌面端接 hover 眼动 */
+/* 固定在视口右下角，所有页面都有。点击回首页（已经在首页则回到顶部） */
 .avatar-badge {
   position: fixed;
   right: 20px;
   bottom: 20px;
   z-index: 40;
+  display: block;
   width: 56px;
   height: 56px;
   border-radius: 12px;
@@ -899,12 +900,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   box-shadow:
     0 8px 20px -8px rgba(0, 0, 0, 0.28),
     0 0 0 1px rgba(0, 0, 0, 0.05);
-  pointer-events: none;
+  cursor: pointer;
+  pointer-events: auto;
   user-select: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .avatar-badge { pointer-events: auto; }
+  -webkit-tap-highlight-color: transparent;
 }
 
 .avatar-badge svg {
