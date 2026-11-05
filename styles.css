@@ -863,7 +863,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- 右下角头像角标 ------------------------------------------- */
 
-/* 固定在视口右下角，所有页面都有。纯装饰：不接收点击，也不进无障碍树 */
+/* 固定在视口右下角，所有页面都有。装饰性元素：触屏上不挡点击，桌面端接 hover 眼动 */
 .avatar-badge {
   position: fixed;
   right: 20px;
@@ -878,6 +878,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     0 0 0 1px rgba(0, 0, 0, 0.05);
   pointer-events: none;
   user-select: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .avatar-badge { pointer-events: auto; }
+}
+
+.avatar-badge svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 767px) {
