@@ -70,8 +70,11 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const clamp1 = (v) => (v < -1 ? -1 : v > 1 ? 1 : v);
 
-  function initFace(root, prefix, rest, travel) {
+  function initFace(root, prefix, rest, travel, span) {
     const TRAVEL_OPT = travel || 190;
+    // span：鼠标从最左滑到最右时，瞳孔在「全行程」里能走多远。
+    // 首屏是全行程 [0,1]；角标只给左边一小段，免得从小图里"翻白眼"
+    const SPAN = span || [0, 1];
     const REST = rest === undefined ? 0.5 : rest;   // 默认看向正前方；角标传 0（看左）
     const rings = Array.from(root.querySelectorAll("[data-ring]"));
     const clips = Array.from(root.querySelectorAll("[data-clip]"));
@@ -148,7 +151,8 @@
 
     return {
       aim(nx, ny) {
-        want = (clamp1(nx) + 1) / 2;
+        const base = (clamp1(nx) + 1) / 2;
+        want = SPAN[0] + base * (SPAN[1] - SPAN[0]);
         wantV = clamp1(ny) * VERT;
         if (!raf) raf = requestAnimationFrame(tick);
       },
@@ -179,7 +183,7 @@
 
     // 右下角标：鼠标移到角标范围内才动，移开回正
     const badge = document.querySelector('[data-face="badge"]');
-    const badgeFace = badge ? initFace(badge, "badge-pose-", 0, 158) : null;
+    const badgeFace = badge ? initFace(badge, "badge-pose-", 0, 158, [0, 0.34]) : null;
     if (badgeFace) {
       window.addEventListener("pointermove", (ev) => {
         const b = badge.getBoundingClientRect();
