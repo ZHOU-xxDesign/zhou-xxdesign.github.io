@@ -73,13 +73,15 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const clamp1 = (v) => (v < -1 ? -1 : v > 1 ? 1 : v);
 
-  function initFace(root, prefix, rest, travel, span) {
+  function initFace(root, prefix, rest, travel, span, dx) {
     const TRAVEL_OPT = travel || 190;
     // span：鼠标从最左滑到最右时，瞳孔在「全行程」里能走多远。
-    // 首屏是全行程 [0,1]；角标是 [0.5, 0.84]——从看左的姿态往中间挪一点，
-    // 不跨到右半边，免得从小图里"翻白眼"
+    // 首屏和角标都用完整行程 [0,1]，瞳孔从左到右、眼线同步形变。
     const SPAN = span || [0, 1];
-    // 0.5 = 保持 artwork 的静态姿态（首屏是居中，角标本身就是看左）
+    // 角标的静态瞳孔比首屏整体左移了 95，dx 把这 95 补回基准，
+    // 否则 rest 会把它再往左推，瞳孔被眶线裁窄。
+    const DX = dx || 0;
+    // 0.5 = 保持 artwork 的静态姿态；角标传 0（看左）
     const REST = rest === undefined ? 0.5 : rest;
     const rings = Array.from(root.querySelectorAll("[data-ring]"));
     const clips = Array.from(root.querySelectorAll("[data-clip]"));
@@ -135,7 +137,7 @@
         // 瞳孔裁到「眼白」而不是外轮廓：顶到眶线时会被裁齐，不会留缝
         e.clip.setAttribute("d", toPath(socket));
         e.ring.setAttribute("d", outer + toPath(socket.slice().reverse()));
-        e.pupil.setAttribute("x", (e.x0 + (cur - 0.5) * TRAVEL).toFixed(1));
+        e.pupil.setAttribute("x", (e.x0 + DX + (cur - 0.5) * TRAVEL).toFixed(1));
         e.pupil.setAttribute("transform", "translate(0 " + curV.toFixed(1) + ")");
       }
     };
@@ -188,7 +190,7 @@
 
     // 右下角标：鼠标移到角标范围内才动，移开回正
     const badge = document.querySelector('[data-face="badge"]');
-    const badgeFace = badge ? initFace(badge, "badge-pose-", 0.5, 158, [0.5, 0.84]) : null;
+    const badgeFace = badge ? initFace(badge, "badge-pose-", 0, 190, [0, 1], 95) : null;
     if (badgeFace) {
       window.addEventListener("pointermove", (ev) => {
         const b = badge.getBoundingClientRect();
