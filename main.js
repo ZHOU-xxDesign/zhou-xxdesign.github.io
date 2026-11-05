@@ -69,7 +69,7 @@
   /* ---------- 3. 眼动：首屏大脸 + 右下角标 ---------------------------- */
   /* 眼眶的两种形态是从「向左看」「向右看」两张图描出来的（各 72 个点，角度一一对应），
      指针横向位置在两者之间插值——瞳孔走，眼线也跟着鼓。
-     首屏那只全程跟着指针；右下角标只在鼠标移到它上面时才动，移开回到默认的看左。 */
+     首屏和右下角标都跟着整页的指针走；指针移出页面时回到默认的看左。 */
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const clamp1 = (v) => (v < -1 ? -1 : v > 1 ? 1 : v);
 
@@ -188,19 +188,19 @@
       window.addEventListener("blur", heroFace.reset);
     }
 
-    // 右下角标：鼠标移到角标范围内才动，移开回正
+    // 右下角标：跟着整页的指针转。角标只有 56px，按它自己的 rect 算会在几像素内打满行程，
+    // 所以按视口归一化：屏幕左半边看左，右半边看右
     const badge = document.querySelector('[data-face="badge"]');
     const badgeFace = badge ? initFace(badge, "badge-pose-", 0, 190, [0, 1], 95) : null;
     if (badgeFace) {
       window.addEventListener("pointermove", (ev) => {
-        const b = badge.getBoundingClientRect();
-        if (ev.clientX < b.left || ev.clientX > b.right || ev.clientY < b.top || ev.clientY > b.bottom) return;
         badgeFace.aim(
-          (ev.clientX - (b.left + b.width / 2)) / (b.width / 2),
-          (ev.clientY - (b.top + b.height / 2)) / (b.height / 2)
+          (ev.clientX / window.innerWidth) * 2 - 1,
+          (ev.clientY / window.innerHeight) * 2 - 1
         );
       }, { passive: true });
-      badge.addEventListener("pointerleave", () => badgeFace.reset());
+      document.addEventListener("mouseleave", badgeFace.reset);
+      window.addEventListener("blur", badgeFace.reset);
     }
   }
 
