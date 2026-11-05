@@ -2,10 +2,11 @@
    周晓旭 · Portfolio — main.js
    1. 页脚年份
    2. 邮箱：一次点击同时「打开邮件客户端 + 复制地址」
-   3. 眼动：首屏大脸 + 右下角标（桌面端 hover）
+   3. 眼动：首屏大脸 + 右下角标（跟随整页指针）
    4. 回到顶部
    5. 首页三块（首屏 / 作品 / 关于）按显露比例吸附
-   6. 作品卡片滚动渐入（带保险回退；现在首页没有 .card，这段会自动跳过）
+   6. 顶部阅读进度
+   7. 作品卡片滚动渐入（带保险回退；现在首页没有 .card，这段会自动跳过）
    ========================================================================== */
 
 (() => {
@@ -355,7 +356,23 @@
     });
   }
 
-  /* ---------- 6. 滚动渐入 --------------------------------------------- */
+  /* ---------- 6. 顶部阅读进度 ----------------------------------------- */
+  /* 一条 2px 的线，贴在整个视口最上沿；进度 = 已滚距离 / 可滚距离。
+     直接写 transform，不走 rAF——内置预览里动画时钟会停摆，滚动事件还在。 */
+  const progressBar = document.querySelector("[data-progress]");
+  if (progressBar) {
+    const syncProgress = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      progressBar.style.transform = "scaleX(" + ratio.toFixed(4) + ")";
+    };
+    window.addEventListener("scroll", syncProgress, { passive: true });
+    window.addEventListener("resize", syncProgress, { passive: true });
+    window.addEventListener("load", syncProgress);
+    syncProgress();
+  }
+
+  /* ---------- 7. 滚动渐入 --------------------------------------------- */
   const cards = document.querySelectorAll(".card");
   if (!cards.length) return;
 
