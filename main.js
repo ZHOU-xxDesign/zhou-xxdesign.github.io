@@ -2,7 +2,10 @@
    周晓旭 · Portfolio — main.js
    1. 页脚年份
    2. 邮箱：一次点击同时「打开邮件客户端 + 复制地址」
-   3. 作品卡片滚动渐入（带保险回退；现在首页没有 .card，这段会自动跳过）
+   3. 首屏头像：眼珠 / 眼眶跟着鼠标
+   4. 回到顶部
+   5. 首页三块（首屏 / 作品 / 关于）按显露比例吸附
+   6. 作品卡片滚动渐入（带保险回退；现在首页没有 .card，这段会自动跳过）
    ========================================================================== */
 
 (() => {
@@ -63,7 +66,7 @@
     });
   }
 
-  /* ---------- 4. 首屏头像：眼珠 / 眼眶跟着鼠标 -------------------------- */
+  /* ---------- 3. 首屏头像：眼珠 / 眼眶跟着鼠标 -------------------------- */
   /* 眼眶的两种形态是从「向左看」「向右看」两张图描出来的（各 72 个点，角度一一对应），
      指针横向位置在两者之间插值——瞳孔走，眼线也跟着鼓。
      纵向没有参考图，只让瞳孔上下小幅移动。 */
@@ -158,7 +161,7 @@
     window.addEventListener("blur", reset);
   }
 
-  /* ---------- 5. 回到顶部 --------------------------------------------- */
+  /* ---------- 4. 回到顶部 --------------------------------------------- */
   /* 滚过半屏才浮出来；淡入用 rAF 自己写（部分内置浏览器里 CSS 过渡不跑） */
   const topBtn = document.querySelector("[data-to-top]");
   if (topBtn) {
@@ -191,7 +194,125 @@
     });
   }
 
-  /* ---------- 3. 滚动渐入 --------------------------------------------- */
+  /* ---------- 5. 区块吸附 --------------------------------------------- */
+  /* 首页三块（首屏 / 作品 / 关于）按「显露比例」吸附：滚动停下来后，
+     谁在顶栏与视口下沿之间露出的部分，占它自己一屏的比例最大，就补到谁的对齐位。
+     用比例而不是「离吸附点多近」，两块交界处任何位置都有归属，不会卡在半屏。
+     关于区比一屏高（约两屏），读到中段时不能往回拽，所以只在离顶部 25% 屏高内吸。 */
+  const snapEls = [".hero", ".works--stage", ".about"]
+    .map((sel) => document.querySelector(sel))
+    .filter(Boolean);
+
+  if (snapEls.length === 3) {
+    const chromeEl = document.querySelector(".chrome");
+    const chromeH = chromeEl ? chromeEl.getBoundingClientRect().height : 0;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const SETTLE = 170;   // 停手多久算一次滚动结束
+    const GLIDE = 320;
+    const SHOW = 0.5;     // 露过一半才有资格
+    const NEAR = 0.25;    // 高过一屏的区块：只在离顶 25% 屏高内吸
+
+    let settleTimer = 0;
+    let glideRaf = 0;
+    let glideUntil = 0;
+
+    const maxY = () =>
+      Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+    const anchorOf = (el) =>
+      Math.max(
+        0,
+        Math.min(
+          Math.round(el.getBoundingClientRect().top + window.scrollY - chromeH),
+          maxY()
+        )
+      );
+
+    const glide = (to) => {
+      const from = window.scrollY;
+      if (reduced || Math.abs(to - from) < 2) {
+        window.scrollTo(0, to);
+        return;
+      }
+      cancelAnimationFrame(glideRaf);
+      const t0 = performance.now();
+      glideUntil = t0 + GLIDE + 140;
+      (function step(now) {
+        const k = Math.min(1, (now - t0) / GLIDE);
+        const e = 1 - Math.pow(1 - k, 3);
+        window.scrollTo({ top: from + (to - from) * e, behavior: "instant" });
+        glideRaf = k < 1 ? requestAnimationFrame(step) : 0;
+      })(t0);
+    };
+
+    let lastY = window.scrollY;
+    let dir = 0;          // 1 = 向下滚，-1 = 向上滚
+
+    const trySnap = () => {
+      if (performance.now() < glideUntil) return;
+      const vh = window.innerHeight;
+      const room = vh - chromeH;
+      let best = null;
+      let bestShown = 0;
+
+      for (const el of snapEls) {
+        const r = el.getBoundingClientRect();
+        const shown = Math.min(r.bottom, vh) - Math.max(r.top, chromeH);
+        const span = Math.min(r.height, room);
+        const ratio = span > 0 ? Math.max(0, shown) / span : 0;
+        if (ratio > bestShown) {
+          bestShown = ratio;
+          best = el;
+        }
+      }
+      if (!best || bestShown < SHOW) return;   // 没有哪块过半：不吸
+      const r = best.getBoundingClientRect();
+      const to = anchorOf(best);
+      const delta = to - window.scrollY;
+      if (Math.abs(delta) < 2) return;         // 已经对齐
+
+      if (r.height > room + 4) {
+        // 比一屏高的块（关于区）：只负责把开头吸齐，中段留给阅读
+        const inside = r.top < chromeH;          // 这块的开头已经滚过去了
+        if (dir > 0 && inside) return;           // 往下读：不再往前吸
+        if (dir < 0 && !inside) return;          // 往上离开：不往回追
+        if (dir < 0 && Math.abs(delta) > vh * NEAR) return;
+      }
+      glide(to);
+    };
+
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+      if (y !== lastY) {
+        dir = y > lastY ? 1 : -1;
+        lastY = y;
+      }
+      if (performance.now() < glideUntil) return;  // 自己补间产生的事件
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(trySnap, SETTLE);
+    }, { passive: true });
+
+    // 补间途中用户自己动滚轮 / 手指 / 翻页键：立刻交还控制权，不和用户抢
+    const yieldToUser = () => {
+      clearTimeout(settleTimer);
+      cancelAnimationFrame(glideRaf);
+      glideRaf = 0;
+      glideUntil = 0;
+    };
+    window.addEventListener("wheel", yieldToUser, { passive: true });
+    window.addEventListener("touchstart", yieldToUser, { passive: true });
+    window.addEventListener("keydown", (e) => {
+      if (
+        e.key === "ArrowUp" || e.key === "ArrowDown" ||
+        e.key === "PageUp" || e.key === "PageDown" ||
+        e.key === "Home" || e.key === "End" || e.key === " "
+      ) {
+        yieldToUser();
+      }
+    });
+  }
+
+  /* ---------- 6. 滚动渐入 --------------------------------------------- */
   const cards = document.querySelectorAll(".card");
   if (!cards.length) return;
 
