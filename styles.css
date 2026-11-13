@@ -235,6 +235,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   user-select: none;
 }
 
+/* 竖屏平板（iPad Air 3 是 834×1112）：按宽度放宽头像，
+   避免 44vw 在竖屏上只占三分之一屏高、中间空一大片。
+   桌面（≥1025px）、横屏 iPad、手机都不命中，原样不变。 */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .hero__face { width: min(76vw, 640px); }
+}
+
 .face__ring { fill: #000; fill-rule: nonzero; }
 .face__pupil { fill: #000; }
 .face__dot { fill: #000; }
